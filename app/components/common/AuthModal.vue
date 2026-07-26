@@ -9,14 +9,14 @@
           <button 
             @click="activeTab = 'login'" 
             class="text-lg font-bold pb-1 transition-colors"
-            :class="activeTab === 'login' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500 hover:text-slate-800'"
+            :class="activeTab === 'login' ? 'text-[#e32727] border-b-2 border-[#e32727]' : 'text-slate-500 hover:text-slate-800'"
           >
             Log In
           </button>
           <button 
             @click="activeTab = 'register'" 
             class="text-lg font-bold pb-1 transition-colors"
-            :class="activeTab === 'register' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500 hover:text-slate-800'"
+            :class="activeTab === 'register' ? 'text-[#e32727] border-b-2 border-[#e32727]' : 'text-slate-500 hover:text-slate-800'"
           >
             Register
           </button>
@@ -37,7 +37,7 @@
               v-model="loginForm.email" 
               type="email" 
               required
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
 
@@ -47,14 +47,14 @@
               v-model="loginForm.password" 
               type="password" 
               required
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
 
           <button 
             type="submit"
             :disabled="isSubmitting"
-            class="w-full py-2.5 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+            class="w-full py-2.5 mt-2 bg-[#e32727] hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
           >
             {{ isSubmitting ? 'Logging in...' : 'Log In' }}
           </button>
@@ -68,7 +68,7 @@
               v-model="registerForm.name" 
               type="text" 
               required
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
 
@@ -78,7 +78,7 @@
               v-model="registerForm.email" 
               type="email" 
               required
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
 
@@ -87,7 +87,7 @@
             <input 
               v-model="registerForm.phone" 
               type="tel" 
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
           
@@ -96,7 +96,7 @@
             <input 
               v-model="registerForm.address" 
               type="text" 
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
 
@@ -107,7 +107,7 @@
               type="password" 
               required
               minlength="8"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
           
@@ -118,14 +118,14 @@
               type="password" 
               required
               minlength="8"
-              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
 
           <button 
             type="submit"
             :disabled="isSubmitting"
-            class="w-full py-2.5 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+            class="w-full py-2.5 mt-2 bg-[#e32727] hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
           >
             {{ isSubmitting ? 'Creating account...' : 'Create Account' }}
           </button>
