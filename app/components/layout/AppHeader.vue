@@ -183,15 +183,15 @@
                         v-for="brand in link.brands" 
                         :key="brand.name" 
                         :to="brand.path" 
-                        class="border border-slate-200 rounded-lg h-20 flex flex-col items-center justify-center hover:border-[#e32727] hover:shadow-md transition-all group/brand bg-white"
+                        class="border border-slate-200 rounded-lg aspect-square p-2 flex flex-col items-center justify-center hover:border-[#e32727] hover:shadow-md transition-all group/brand bg-white"
                       >
-                        <Icon v-if="brand.icon" :name="brand.icon" class="w-8 h-8 text-slate-700 group-hover/brand:text-[#e32727] transition-colors mb-1" />
-                        <img v-else-if="brand.logo" :src="brand.logo" class="w-8 h-8 object-contain mb-1 opacity-70 group-hover/brand:opacity-100 transition-opacity" />
-                        <span class="text-[11px] font-bold text-slate-600 group-hover/brand:text-[#e32727]">{{ brand.name }}</span>
+                        <Icon v-if="brand.icon" :name="brand.icon" class="w-10 h-10 text-slate-700 group-hover/brand:text-[#e32727] transition-colors mb-2" />
+                        <img v-else-if="brand.logo" :src="brand.logo" class="w-12 h-12 object-contain mb-2 opacity-80 group-hover/brand:opacity-100 transition-opacity" />
+                        <span class="text-[11px] font-bold text-slate-600 group-hover/brand:text-[#e32727] text-center line-clamp-1">{{ brand.name }}</span>
                       </NuxtLink>
                     </div>
                   </div>
-                  <div class="w-1/3 rounded-xl overflow-hidden relative group/banner cursor-pointer block">
+                  <div class="w-1/3 rounded-xl overflow-hidden relative group/banner cursor-pointer block aspect-square">
                     <img src="/images/banner2.png" alt="Featured Gear" class="w-full h-full object-cover group-hover/banner:scale-105 transition-transform duration-700" />
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-6">
                       <div class="bg-[#e32727] text-white text-[10px] font-black uppercase px-2 py-1 rounded inline-block mb-2 w-fit">Top Deals</div>
@@ -408,7 +408,7 @@ const toggleMobileDropdown = (name: string) => {
 }
 
 const { data: categoriesResponse } = await useAsyncData('header-categories', () => $api('/public/categories') as Promise<any>)
-const { data: brandsResponse } = await useAsyncData('header-brands', () => $api('/public/vendors') as Promise<any>)
+const { data: brandsResponse } = await useAsyncData('header-brands', () => $api('/public/brands') as Promise<any>)
 
 const dynamicCategories = computed(() => {
   const cats = categoriesResponse.value?.data || []
