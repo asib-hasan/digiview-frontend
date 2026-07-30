@@ -36,13 +36,13 @@
           </div>
           
           <!-- Thumbnails -->
-          <div v-if="allImages.length > 1" class="flex gap-3 w-full overflow-x-auto print:hidden pb-2 scrollbar-hide min-w-0">
+          <div v-if="allImages.length > 1" class="flex gap-3 w-full overflow-x-auto print:hidden pb-2 pt-1 px-1 scrollbar-hide min-w-0">
             <button 
               v-for="(img, idx) in allImages" 
               :key="idx"
               @click="activeImage = img"
-              class="w-24 h-24 border border-slate-200 overflow-hidden shrink-0 transition-all bg-white flex items-center justify-center p-2"
-              :class="activeImage === img ? 'ring-2 ring-[#e32727] border-transparent' : 'hover:border-slate-400'"
+              class="w-24 h-24 border-2 overflow-hidden shrink-0 transition-all bg-white flex items-center justify-center p-2"
+              :class="activeImage === img ? 'border-[#e32727]' : 'border-slate-200 hover:border-slate-400'"
             >
               <img :src="img" :alt="`${product.title} thumbnail ${idx + 1}`" class="max-w-full max-h-full object-contain" />
             </button>
