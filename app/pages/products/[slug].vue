@@ -29,23 +29,23 @@
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
         <!-- Left Column: Image Gallery -->
-        <div class="lg:col-span-7 flex flex-col-reverse md:flex-row gap-4 min-w-0">
+        <div class="lg:col-span-7 flex flex-col gap-4 min-w-0">
+          <!-- Main Image -->
+          <div class="border border-slate-200 bg-white aspect-[4/3] sm:aspect-video md:aspect-auto md:min-h-[500px] flex items-center justify-center relative p-4 md:p-8 w-full min-w-0">
+            <img :src="activeImage" :alt="product.title" class="max-w-full max-h-full object-contain" />
+          </div>
+          
           <!-- Thumbnails -->
-          <div class="flex md:flex-col gap-3 w-full md:w-28 shrink-0 overflow-x-auto overflow-y-hidden md:overflow-visible print:hidden pb-2 md:pb-0 scrollbar-hide min-w-0">
+          <div v-if="allImages.length > 1" class="flex gap-3 w-full overflow-x-auto print:hidden pb-2 scrollbar-hide min-w-0">
             <button 
-              v-for="(img, idx) in product.images" 
+              v-for="(img, idx) in allImages" 
               :key="idx"
               @click="activeImage = img"
-              class="w-24 h-24 md:w-28 md:h-28 border border-slate-200 overflow-hidden shrink-0 transition-all bg-white flex items-center justify-center p-2"
+              class="w-24 h-24 border border-slate-200 overflow-hidden shrink-0 transition-all bg-white flex items-center justify-center p-2"
               :class="activeImage === img ? 'ring-2 ring-[#e32727] border-transparent' : 'hover:border-slate-400'"
             >
               <img :src="img" :alt="`${product.title} thumbnail ${idx + 1}`" class="max-w-full max-h-full object-contain" />
             </button>
-          </div>
-          
-          <!-- Main Image -->
-          <div class="flex-1 border border-slate-200 bg-white aspect-[4/3] sm:aspect-video md:aspect-auto md:min-h-[500px] flex items-center justify-center relative p-4 md:p-8 w-full min-w-0">
-            <img :src="activeImage" :alt="product.title" class="max-w-full max-h-full object-contain" />
           </div>
         </div>
 
@@ -242,6 +242,19 @@ const product = computed(() => response.value?.data)
 const accessories = computed(() => product.value?.accessories || [])
 const downloads = computed(() => product.value?.downloads || [])
 
+const allImages = computed(() => {
+  if (!product.value) return []
+  const imgs = []
+  if (product.value.image) imgs.push(product.value.image)
+  if (product.value.images && Array.isArray(product.value.images)) {
+    product.value.images.forEach(img => {
+      const url = typeof img === 'string' ? img : img.image
+      if (url && url !== product.value.image) imgs.push(url)
+    })
+  }
+  return imgs.length ? imgs : ['/product.png']
+})
+
 const activeImage = ref('')
 const activeTab = ref((route.query.tab as string) || 'description')
 const isPriceModalOpen = ref(false)
@@ -249,10 +262,8 @@ const isAuthModalOpen = ref(false)
 
 // Initialize active image when product is found
 watch(product, (newProduct) => {
-  if (newProduct && newProduct.images && newProduct.images.length > 0) {
-    activeImage.value = newProduct.images[0]
-  } else if (newProduct) {
-    activeImage.value = newProduct.image || '/product.png'
+  if (newProduct) {
+    activeImage.value = allImages.value[0]
   }
 }, { immediate: true })
 
