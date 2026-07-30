@@ -90,7 +90,7 @@
           <!-- Overview Description -->
           <div class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-200">
             <h3 class="text-[17px] font-normal text-slate-900 mb-3 md:mb-4">Overview:</h3>
-            <p class="text-sm md:text-[15px] text-slate-600 leading-relaxed break-words">{{ product.description }}</p>
+            <p class="text-sm md:text-[15px] text-slate-600 leading-relaxed break-words">{{ product.short_description }}</p>
           </div>
         </div>
 
