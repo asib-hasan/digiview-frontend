@@ -162,23 +162,26 @@ const mobileFilterOpen = ref(false)
 
 const route = useRoute()
 
+const getCategoryFromQuery = (query: any) => {
+  const q = query.categories || query.category
+  return q ? (q as string).split(',') : []
+}
+
+const getBrandFromQuery = (query: any) => {
+  const q = query.brands || query.brand
+  return q ? (q as string).split(',') : []
+}
+
 // Filter State
-const selectedCategories = ref<string[]>(route.query.categories ? (route.query.categories as string).split(',') : [])
-const selectedBrands = ref<string[]>(route.query.brands ? (route.query.brands as string).split(',') : [])
+const selectedCategories = ref<string[]>(getCategoryFromQuery(route.query))
+const selectedBrands = ref<string[]>(getBrandFromQuery(route.query))
 const currentPage = ref(1)
 
-// Sync from route query if navigated from another component (like header) while already on page
+// Sync from route query if navigated from another component while already on page
 watch(() => route.query, (newQuery) => {
-  if (newQuery.categories) {
-    selectedCategories.value = (newQuery.categories as string).split(',')
-  } else {
-    selectedCategories.value = []
-  }
-  if (newQuery.brands) {
-    selectedBrands.value = (newQuery.brands as string).split(',')
-  } else {
-    selectedBrands.value = []
-  }
+  selectedCategories.value = getCategoryFromQuery(newQuery)
+  selectedBrands.value = getBrandFromQuery(newQuery)
+  currentPage.value = 1
 }, { deep: true })
 
 // Fetch Filter Options

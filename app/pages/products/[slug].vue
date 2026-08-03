@@ -121,39 +121,77 @@
             <div v-else class="text-sm text-slate-500 italic">No specifications available.</div>
           </div>
           <div v-if="activeTab === 'accessories'" class="animate-fade-in">
-            <div class="mb-8 flex items-center justify-between">
-              <h2 class="text-2xl font-black text-slate-800">Accessories for {{ product.title }}</h2>
-              <span class="text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">{{ accessories.length }} Items</span>
-            </div>
-            
-            <div v-if="accessories.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+
+            <!-- Minimal Categorized Accessories Side-by-Side Layout -->
+            <div v-if="categorizedAccessories.length > 0" class="flex flex-col md:flex-row gap-6 items-start">
               
-              <div v-for="acc in accessories" :key="acc.id" class="group bg-white border border-slate-200 hover:border-[#e32727] rounded-2xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col relative">
-                
-                <!-- Image -->
-                <div class="p-6 bg-slate-50 flex items-center justify-center aspect-square relative overflow-hidden group-hover:bg-slate-100 transition-colors">
-                  <img :src="acc.image || '/product.png'" :alt="acc.title" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500 mix-blend-multiply drop-shadow-sm" />
+              <!-- Minimal Left Sidebar: Category List -->
+              <div class="w-full md:w-60 flex-shrink-0 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm divide-y divide-slate-100">
+                <button
+                  v-for="(catGroup, idx) in categorizedAccessories"
+                  :key="catGroup.id"
+                  @click="activeAccessoryCategoryIndex = idx"
+                  class="w-full text-left px-4 py-3 text-xs md:text-sm font-semibold flex items-center justify-between transition-all"
+                  :class="[
+                    activeAccessoryCategoryIndex === idx
+                      ? 'bg-red-50/70 text-[#e32727] font-bold border-l-4 border-[#e32727] pl-3'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-l-4 border-transparent'
+                  ]"
+                >
+                  <span class="truncate pr-2">{{ catGroup.name }}</span>
+                  <Icon name="lucide:chevron-right" class="w-3.5 h-3.5 flex-shrink-0" :class="{ 'text-[#e32727]': activeAccessoryCategoryIndex === idx, 'text-slate-300': activeAccessoryCategoryIndex !== idx }" />
+                </button>
+              </div>
+
+              <!-- Right Content Area: Active Category Products Grid -->
+              <div class="flex-1 w-full min-w-0">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-base font-bold text-slate-800">{{ activeAccessoryCategory?.name }}</h3>
+                  <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                    {{ activeAccessoryCategory?.products?.length || 0 }} Items
+                  </span>
                 </div>
-                
-                <!-- Content -->
-                <div class="p-5 flex flex-col flex-grow border-t border-slate-100">
-                  <h4 class="font-bold text-slate-800 text-[13px] mb-4 line-clamp-2 leading-snug group-hover:text-[#e32727] transition-colors">
-                    <NuxtLink :to="'/products/' + acc.slug" class="focus:outline-none">
-                      <span class="absolute inset-0" aria-hidden="true" />
-                      {{ acc.title }}
-                    </NuxtLink>
-                  </h4>
-                  
-                  <div class="mt-auto pt-2 relative z-20">
-                     <NuxtLink :to="'/products/' + acc.slug" class="flex items-center justify-center w-full py-2.5 border border-[#e32727] text-[#e32727] hover:bg-[#e32727] hover:text-white text-center font-bold text-[10px] uppercase tracking-widest rounded-lg transition-colors">
-                       View Details
-                     </NuxtLink>
+
+                <div v-if="activeAccessoryCategory?.products && activeAccessoryCategory.products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  <div
+                    v-for="acc in activeAccessoryCategory.products"
+                    :key="acc.id"
+                    class="group bg-white border border-slate-200 hover:border-[#e32727] rounded-xl p-3 transition-all duration-300 hover:shadow-md flex flex-col relative"
+                  >
+                    <!-- Image -->
+                    <div class="bg-slate-50 rounded-lg p-4 aspect-square flex items-center justify-center relative overflow-hidden group-hover:bg-slate-100/80 transition-colors">
+                      <img :src="acc.image || '/product.png'" :alt="acc.title" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 mix-blend-multiply" />
+                    </div>
+
+                    <!-- Content -->
+                    <div class="pt-3 flex flex-col flex-grow">
+                      <p v-if="acc.mfr_code || acc.dv_code" class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1 truncate">{{ acc.mfr_code || acc.dv_code }}</p>
+                      <h4 class="font-bold text-slate-800 text-xs line-clamp-2 leading-snug group-hover:text-[#e32727] transition-colors mb-3">
+                        <NuxtLink :to="'/products/' + acc.slug" class="focus:outline-none">
+                          <span class="absolute inset-0" aria-hidden="true" />
+                          {{ acc.title }}
+                        </NuxtLink>
+                      </h4>
+
+                      <div class="mt-auto pt-1 relative z-20">
+                        <NuxtLink :to="'/products/' + acc.slug" class="inline-flex items-center gap-1 text-[11px] font-bold text-[#e32727] hover:underline">
+                          View Details <Icon name="lucide:arrow-right" class="w-3 h-3" />
+                        </NuxtLink>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                <div v-else class="text-slate-400 italic text-xs py-8 text-center bg-white border border-slate-200 rounded-xl">
+                  No items assigned to this accessory category.
+                </div>
               </div>
-              
+
             </div>
-            <div v-else class="text-slate-500 italic text-sm">No accessories found.</div>
+
+            <div v-else class="text-slate-400 italic text-xs py-8 text-center bg-white border border-slate-200 rounded-xl">
+              No accessories found.
+            </div>
           </div>
           <div v-if="activeTab === 'downloads'" class="animate-fade-in">
             <h2 class="text-2xl font-black text-slate-800 mb-6">Downloads</h2>
@@ -239,7 +277,14 @@ const { data: response, pending, error } = await useAsyncData(`product-${slug.va
 )
 
 const product = computed(() => response.value?.data)
-const accessories = computed(() => product.value?.accessories || [])
+const categorizedAccessories = computed(() => product.value?.categorized_accessories || [])
+const activeAccessoryCategoryIndex = ref(0)
+const activeAccessoryCategory = computed(() => {
+  if (categorizedAccessories.value.length > 0) {
+    return categorizedAccessories.value[activeAccessoryCategoryIndex.value] || categorizedAccessories.value[0]
+  }
+  return null
+})
 const downloads = computed(() => product.value?.downloads || [])
 
 const allImages = computed(() => {

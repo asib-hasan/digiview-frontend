@@ -83,16 +83,17 @@
           </div>
 
           <div class="space-y-1">
-            <label class="text-sm font-medium text-slate-700">Phone</label>
+            <label class="text-sm font-medium text-slate-700">Phone<span class="text-red-500">*</span></label>
             <input 
               v-model="registerForm.phone" 
               type="tel" 
+              required
               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#e32727] focus:border-[#e32727] outline-none transition-all"
             />
           </div>
           
           <div class="space-y-1">
-            <label class="text-sm font-medium text-slate-700">Address</label>
+            <label class="text-sm font-medium text-slate-700">Company/Address:</label>
             <input 
               v-model="registerForm.address" 
               type="text" 

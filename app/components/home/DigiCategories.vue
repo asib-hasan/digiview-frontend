@@ -17,10 +17,11 @@
       <!-- Categories Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 animate-fade-in-up animation-delay-200">
         
-        <div 
+        <NuxtLink 
           v-for="(category, index) in categories" 
           :key="index"
-          class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-900 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
+          :to="`/products?categories=${encodeURIComponent(category.title)}`"
+          class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-900 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 block"
         >
           <!-- Background Image -->
           <img :src="category.image" :alt="category.title" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700" />
@@ -32,11 +33,11 @@
           <div class="absolute inset-0 p-6 flex flex-col justify-end items-center text-center">
             <h3 class="text-2xl font-black text-white mb-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{{ category.title }}</h3>
             
-            <NuxtLink :to="`/products?category=${category.slug}`" class="px-6 py-3 bg-white text-slate-900 font-bold rounded-lg text-sm w-4/5 shadow-lg transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-2 hover:bg-[#e32727] hover:text-white">
+            <div class="px-6 py-3 bg-white text-slate-900 font-bold rounded-lg text-sm w-4/5 shadow-lg transform translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-2 group-hover:bg-[#e32727] group-hover:text-white">
               Shop All <Icon name="lucide:arrow-right" class="w-4 h-4" />
-            </NuxtLink>
+            </div>
           </div>
-        </div>
+        </NuxtLink>
 
       </div>
 
