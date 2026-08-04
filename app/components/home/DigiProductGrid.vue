@@ -2,31 +2,29 @@
   <section class="py-12 md:py-20 bg-slate-50 relative overflow-hidden">
     <div class="container mx-auto px-4 md:px-8">
       
-      <!-- Section Heading with Dynamic DB Categories -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 animate-fade-in-up">
-        <div class="max-w-xl">
-          <div class="mb-3 inline-flex items-center gap-2 text-sm font-bold tracking-widest uppercase text-[#e32727]">
-            PRODUCT SHOWCASE
-          </div>
-          <h2 class="text-3xl md:text-4xl font-black text-slate-800 leading-tight">
-            Featured <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e32727] to-red-600">Equipment</span>
-          </h2>
-        </div>
+      <!-- Dynamic DB Category Tabs (Placed on Top) -->
+      <div v-if="categoryTabs.length > 0" class="flex flex-wrap items-center gap-6 sm:gap-8 border-b border-slate-200 mb-8 animate-fade-in-up">
+        <button
+          v-for="tab in categoryTabs"
+          :key="tab.value"
+          @click="activeCategory = tab.value"
+          class="px-1 pb-3 pt-1 text-sm font-bold transition-all relative cursor-pointer whitespace-nowrap"
+          :class="activeCategory === tab.value 
+            ? 'text-[#e32727] border-b-2 border-[#e32727] -mb-px' 
+            : 'text-slate-500 hover:text-slate-800'"
+        >
+          {{ tab.name }}
+        </button>
+      </div>
 
-        <!-- Real Categories from Database -->
-        <div v-if="categoryTabs.length > 0" class="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-1">
-          <button
-            v-for="tab in categoryTabs"
-            :key="tab.value"
-            @click="activeCategory = tab.value"
-            class="px-4 py-2 text-sm font-bold transition-all relative cursor-pointer"
-            :class="activeCategory === tab.value 
-              ? 'text-[#e32727] border-b-2 border-[#e32727] -mb-[5px]' 
-              : 'text-slate-500 hover:text-slate-800'"
-          >
-            {{ tab.name }}
-          </button>
+      <!-- Section Heading -->
+      <div class="mb-10 animate-fade-in-up">
+        <div class="mb-2 text-xs md:text-sm font-bold tracking-widest uppercase text-[#e32727]">
+          PRODUCT SHOWCASE
         </div>
+        <h2 class="text-3xl md:text-4xl font-black text-slate-800 leading-tight">
+          Featured <span class="text-[#e32727]">Equipment</span>
+        </h2>
       </div>
 
       <!-- Products Grid -->

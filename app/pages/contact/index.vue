@@ -85,21 +85,25 @@
                     <input id="phone" v-model="form.phone" type="tel" class="form-input" placeholder="+880 1XXX XXXXXX" />
                   </div>
                   <div>
-                    <label class="form-label" for="subject">Inquiry Type *</label>
-                    <select id="subject" v-model="form.subject" class="form-input" required>
-                      <option value="" disabled>Select an option</option>
-                      <option>Studio Integration</option>
-                      <option>Equipment Quote</option>
-                      <option>Technical Support</option>
-                      <option>Project Consultation</option>
-                      <option>Other</option>
-                    </select>
+                    <label class="form-label" for="company">Company / Organization</label>
+                    <input id="company" v-model="form.company" type="text" class="form-input" placeholder="Your company or organization name" />
                   </div>
                 </div>
 
                 <div>
-                  <label class="form-label" for="company">Organization / Channel / Studio</label>
-                  <input id="company" v-model="form.company" type="text" class="form-input" placeholder="Your organization name" />
+                  <label class="form-label" for="subject">Inquiry Type *</label>
+                  <select id="subject" v-model="form.subject" class="form-input" required>
+                    <option value="" disabled>Select an option</option>
+                    <option>AV Production</option>
+                    <option>System Integration</option>
+                    <option>Technical Support</option>
+                    <option>Live Streaming</option>
+                    <option>IP Transmission/Production</option>
+                    <option>Content Creator</option>
+                    <option>Post Production</option>
+                    <option>Project Consultation</option>
+                    <option>Other</option>
+                  </select>
                 </div>
 
                 <div>
@@ -228,6 +232,20 @@ const contactInfo = computed(() => {
       href: null,
       lines: [settings.value.address],
     })
+  }
+
+  // Global Associate Partner Card
+  const partnerText = settings.value.partner || settings.value.partner_address || "Whiteways Systems Pte Ltd.\n#06-06 Number One Building\n1 Ubi Crescent, Singapore 408563"
+  if (partnerText) {
+    const lines = partnerText.split('\n').map((l: string) => l.trim()).filter(Boolean)
+    if (lines.length > 0) {
+      info.push({
+        label: settings.value.partner_title || 'GLOBAL ASSOCIATE PARTNER',
+        icon: 'lucide:handshake',
+        href: null,
+        lines: lines,
+      })
+    }
   }
 
   return info
