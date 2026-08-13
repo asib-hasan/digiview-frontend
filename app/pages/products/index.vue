@@ -19,30 +19,11 @@
 
       <div class="flex flex-col lg:flex-row gap-8 items-start">
         
-        <!-- Sidebar Filter (Desktop) & Mobile Drawer -->
-        <div 
-          class="fixed inset-0 z-50 lg:static lg:block lg:w-72 shrink-0 transition-transform duration-300"
-          :class="mobileFilterOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-        >
-          <!-- Mobile Overlay -->
-          <div 
-            v-if="mobileFilterOpen" 
-            @click="mobileFilterOpen = false"
-            class="absolute inset-0 bg-slate-900/50 lg:hidden"
-          ></div>
-          
-          <!-- Filter Panel -->
-          <div class="absolute lg:static top-0 left-0 h-full lg:h-auto w-4/5 max-w-xs lg:w-full bg-white lg:bg-transparent shadow-2xl lg:shadow-none p-6 lg:p-0 overflow-y-auto lg:overflow-visible flex flex-col gap-8">
-            
-            <div class="flex items-center justify-between lg:hidden mb-2">
-              <h3 class="text-xl font-bold text-slate-800">Filters</h3>
-              <button @click="mobileFilterOpen = false" class="p-2 text-slate-400 hover:text-slate-600 bg-slate-100 rounded-lg">
-                <Icon name="lucide:x" class="w-5 h-5" />
-              </button>
-            </div>
-
+        <!-- Sidebar Filter (Desktop) -->
+        <aside class="hidden lg:block w-72 shrink-0">
+          <div class="flex flex-col gap-8 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
             <!-- Category Filter -->
-            <div>
+            <div v-if="categories.length > 0">
               <h3 class="text-sm font-bold uppercase tracking-widest text-slate-800 mb-4 flex items-center gap-2">
                 <Icon name="lucide:tag" class="w-4 h-4 text-[#e32727]" /> Category
               </h3>
@@ -54,14 +35,14 @@
               </div>
             </div>
 
-            <hr class="border-slate-200" />
+            <hr v-if="categories.length > 0 && brands.length > 0" class="border-slate-200" />
 
             <!-- Brand Filter -->
-            <div>
+            <div v-if="brands.length > 0">
               <h3 class="text-sm font-bold uppercase tracking-widest text-slate-800 mb-4 flex items-center gap-2">
                 <Icon name="lucide:award" class="w-4 h-4 text-[#e32727]" /> Brand
               </h3>
-              <div class="space-y-3">
+              <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
                 <label v-for="brand in brands" :key="brand" class="flex items-center gap-3 cursor-pointer group">
                   <input type="checkbox" :value="brand" v-model="selectedBrands" class="w-5 h-5 rounded border-slate-300 text-[#e32727] focus:ring-[#e32727]" />
                   <span class="text-slate-600 group-hover:text-slate-900 transition-colors">{{ brand }}</span>
@@ -76,9 +57,72 @@
             >
               Clear All Filters
             </button>
-            
           </div>
-        </div>
+        </aside>
+
+        <!-- Mobile Filter Drawer -->
+        <Teleport to="body">
+          <div v-if="mobileFilterOpen" class="fixed inset-0 z-[100] lg:hidden">
+            <!-- Mobile Overlay -->
+            <div 
+              @click="mobileFilterOpen = false"
+              class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            ></div>
+            
+            <!-- Mobile Panel -->
+            <div class="absolute top-0 left-0 h-full w-4/5 max-w-xs bg-white shadow-2xl p-6 overflow-y-auto flex flex-col gap-6 z-10">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <h3 class="text-lg font-bold text-slate-800">Filters</h3>
+                <button @click="mobileFilterOpen = false" class="p-2 text-slate-400 hover:text-slate-600 bg-slate-100 rounded-lg">
+                  <Icon name="lucide:x" class="w-5 h-5" />
+                </button>
+              </div>
+
+              <!-- Mobile Categories -->
+              <div v-if="categories.length > 0">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-800 mb-3 flex items-center gap-2">
+                  <Icon name="lucide:tag" class="w-4 h-4 text-[#e32727]" /> Category
+                </h4>
+                <div class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
+                  <label v-for="cat in categories" :key="cat" class="flex items-center gap-3 cursor-pointer group">
+                    <input type="checkbox" :value="cat" v-model="selectedCategories" class="w-4 h-4 rounded border-slate-300 text-[#e32727] focus:ring-[#e32727]" />
+                    <span class="text-sm text-slate-600 group-hover:text-slate-900">{{ cat }}</span>
+                  </label>
+                </div>
+              </div>
+
+              <hr v-if="categories.length > 0 && brands.length > 0" class="border-slate-100" />
+
+              <!-- Mobile Brands -->
+              <div v-if="brands.length > 0">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-800 mb-3 flex items-center gap-2">
+                  <Icon name="lucide:award" class="w-4 h-4 text-[#e32727]" /> Brand
+                </h4>
+                <div class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
+                  <label v-for="brand in brands" :key="brand" class="flex items-center gap-3 cursor-pointer group">
+                    <input type="checkbox" :value="brand" v-model="selectedBrands" class="w-4 h-4 rounded border-slate-300 text-[#e32727] focus:ring-[#e32727]" />
+                    <span class="text-sm text-slate-600 group-hover:text-slate-900">{{ brand }}</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="mt-auto pt-4 flex gap-2">
+                <button 
+                  @click="clearFilters"
+                  class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs"
+                >
+                  Clear
+                </button>
+                <button 
+                  @click="mobileFilterOpen = false"
+                  class="flex-1 py-2.5 bg-[#e32727] text-white font-bold rounded-xl text-xs"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        </Teleport>
 
         <!-- Main Product Grid -->
         <div class="flex-1">

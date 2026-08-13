@@ -383,6 +383,49 @@
       </div>
     </section>
 
+    <!-- Clients / Users Logo Marquee Section (Just above Footer) -->
+    <section v-if="clientLogos.length > 0" class="py-16 md:py-20 bg-slate-50 border-t border-slate-200/80 overflow-hidden">
+      <div class="container mx-auto px-4 md:px-8 mb-10 text-center">
+        <h2 v-observe class="text-2xl md:text-3xl lg:text-4xl font-black text-slate-800 tracking-tight" :class="{ 'animate-fade-up': observed.has($el) }">
+          Our <span class="text-[#e32727]">Valuable Clients/Users</span>
+        </h2>
+        <p v-observe class="text-slate-500 text-sm mt-2 font-medium" :class="{ 'animate-fade-up delay-200': observed.has($el) }">
+          Trusted by the leading national television networks and production houses
+        </p>
+      </div>
+
+      <!-- Marquee Track Wrapper -->
+      <div class="relative w-full flex flex-col items-center overflow-hidden py-2">
+        <!-- Left/Right Gradients -->
+        <div class="absolute left-0 top-0 bottom-0 w-20 md:w-48 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-20 md:w-48 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none"></div>
+
+        <div class="flex overflow-hidden group w-full">
+          <!-- Track 1 -->
+          <div class="flex shrink-0 animate-marquee min-w-full gap-8 px-4 items-center justify-around">
+            <div 
+              v-for="(client, idx) in clientLogos" 
+              :key="`c1-${idx}`" 
+              class="bg-white rounded-2xl border border-slate-200/60 shadow-xs hover:shadow-lg hover:border-[#e32727]/40 transition-all duration-300 p-4 px-6 flex items-center justify-center h-24 w-60 shrink-0 group/card cursor-pointer"
+            >
+              <img :src="client.logo" :alt="client.name" class="max-h-full max-w-full object-contain filter contrast-125 transition-all duration-300 transform group-hover/card:scale-110" />
+            </div>
+          </div>
+          
+          <!-- Track 2 (Duplicate for seamless loop) -->
+          <div class="flex shrink-0 animate-marquee min-w-full gap-8 px-4 items-center justify-around" aria-hidden="true">
+            <div 
+              v-for="(client, idx) in clientLogos" 
+              :key="`c2-${idx}`" 
+              class="bg-white rounded-2xl border border-slate-200/60 shadow-xs hover:shadow-lg hover:border-[#e32727]/40 transition-all duration-300 p-4 px-6 flex items-center justify-center h-24 w-60 shrink-0 group/card cursor-pointer"
+            >
+              <img :src="client.logo" :alt="client.name" class="max-h-full max-w-full object-contain filter contrast-125 transition-all duration-300 transform group-hover/card:scale-110" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -394,6 +437,18 @@ const { $api } = useNuxtApp()
 
 const { data: settingsResponse } = await useAsyncData('global-settings-about', () => $api('/public/settings') as Promise<any>)
 const settings = computed(() => settingsResponse.value?.data || {})
+
+// Fetch dynamic clients from backend CMS
+const { data: clientsResponse } = await useAsyncData('about-clients', () => $api('/public/clients') as Promise<any>)
+const clientLogos = computed(() => {
+  const dynamicClients = clientsResponse.value?.data || []
+  return dynamicClients
+    .filter((c: any) => Boolean(c.logo))
+    .map((c: any) => ({
+      name: c.title,
+      logo: c.logo
+    }))
+})
 
 useSeoMeta({
   title: 'About Us — Digiview Broadcast',
@@ -521,12 +576,17 @@ const faqs = computed(() => faqsData.value?.data || [])
   padding-bottom: 0;
 }
 
-/* ── Scrollbar hide for testimonials ── */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+/* ── Marquee Animation ── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+.group:hover .animate-marquee {
+  animation-play-state: paused;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
-  <!-- Using bg-[#f8f9fa] to match standard site background, pt-36 to clear header -->
-  <div class="min-h-[85vh] bg-[#f8f9fa] flex flex-col justify-center py-16 pt-36 px-4">
+  <div class="min-h-[80vh] bg-[#f8f9fa] flex flex-col justify-center py-16 px-4">
     
     <!-- Standard fixed max-width container, preventing squishing on wide screens -->
     <div class="w-full max-w-[380px] mx-auto">

@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 bg-white border-b border-slate-100 overflow-hidden">
+  <section v-if="clientImages.length > 0" class="py-16 bg-white border-b border-slate-100 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
       <div class="text-center" v-animate="'animate-fade-up'">
         <h2 class="text-2xl font-black text-slate-900 uppercase tracking-widest border-b-2 border-slate-200 pb-4 inline-block px-8">Our Clients</h2>
@@ -15,8 +15,8 @@
       <div class="flex animate-marquee opacity-80 group-hover:opacity-100 transition-opacity duration-500 w-max hover:[animation-play-state:paused]">
         <!-- Duplicate lists for seamless loop -->
         <div v-for="n in 2" :key="n" class="flex gap-16 md:gap-24 items-center px-8 md:px-12 w-max">
-          <div v-for="image in clientImages" :key="image + n" class="flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0 cursor-pointer">
-            <img :src="`/Clients/${image}`" alt="Client Logo" class="h-16 md:h-20 w-auto max-w-[120px] md:max-w-[160px] object-contain drop-shadow-sm mix-blend-multiply" />
+          <div v-for="(image, idx) in clientImages" :key="`c-${idx}-${n}`" class="flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0 cursor-pointer">
+            <img :src="image.logo" :alt="image.title" class="h-14 md:h-16 w-auto max-w-[140px] md:max-w-[180px] object-contain drop-shadow-sm" />
           </div>
         </div>
       </div>
@@ -25,18 +25,20 @@
 </template>
 
 <script setup lang="ts">
-const clientImages = [
-  'one.PNG',
-  'two.PNG',
-  'three.PNG',
-  'four.PNG',
-  'five.PNG',
-  'six.PNG',
-  'seven.PNG',
-  'eight.PNG',
-  'nine.PNG',
-  'ten.PNG'
-]
+import { computed } from 'vue'
+
+const { $api } = useNuxtApp()
+const { data: clientsResponse } = await useAsyncData('home-clients', () => $api('/public/clients') as Promise<any>)
+
+const clientImages = computed(() => {
+  const dynamicClients = clientsResponse.value?.data || []
+  return dynamicClients
+    .filter((c: any) => Boolean(c.logo))
+    .map((c: any) => ({
+      logo: c.logo,
+      title: c.title
+    }))
+})
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full overflow-hidden bg-slate-900 group mt-16 md:mt-20 pt-16 pb-20 md:pt-20 md:pb-28">
+  <div class="relative w-full overflow-hidden bg-slate-900 group pt-16 pb-20 md:pt-20 md:pb-28">
     
     <!-- Video Background & Dark Overlay -->
     <div class="absolute inset-0 z-0">

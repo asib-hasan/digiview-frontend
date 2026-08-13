@@ -3,7 +3,7 @@
     <PageHero
       title="Latest Insights"
       subtitle="Stay up to date with the latest trends, technologies, and innovations in the broadcast and media industry."
-      label="DIGIVIEW BLOG"
+      label="DIGIVIEW NEWS"
     />
 
     <section class="py-20 md:py-28 bg-[#f8f9fa]">
@@ -85,7 +85,7 @@ const blogs = computed(() => {
 })
 
 useSeoMeta({
-  title: 'Blogs — Digiview Broadcast',
+  title: 'News — Digiview Broadcast',
   description: 'Read the latest insights and news from Digiview about broadcasting technology, 4K studios, audio systems, and post-production workflows.',
 })
 

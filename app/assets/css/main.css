@@ -305,3 +305,37 @@ h6 {
 .animate-slide-right {
   animation: slideRight 0.7s ease-out forwards;
 }
+
+/* ─── Video Frame 1280x720 (16:9) ────────────────────────── */
+.prose iframe,
+.prose video,
+.prose .ql-video,
+.product-description-content iframe,
+.product-description-content video,
+.product-description-content .ql-video,
+iframe.ql-video {
+  width: 100%;
+  max-width: 1280px;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media (min-width: 1280px) {
+  .prose iframe,
+  .prose video,
+  .prose .ql-video,
+  .product-description-content iframe,
+  .product-description-content video,
+  .product-description-content .ql-video,
+  iframe.ql-video {
+    width: 1280px;
+    height: 720px;
+    max-width: 100%;
+  }
+}

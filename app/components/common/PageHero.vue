@@ -1,5 +1,5 @@
 <template>
-  <section class="relative bg-slate-900 pt-36 pb-16 md:pt-40 md:pb-20 overflow-hidden flex flex-col items-center justify-center text-center">
+  <section class="relative bg-slate-900 py-16 md:py-20 overflow-hidden flex flex-col items-center justify-center text-center">
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
       <img :src="bgImage || '/slider/1.webp'" alt="Page Background" class="w-full h-full object-cover opacity-50" />

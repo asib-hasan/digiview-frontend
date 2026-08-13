@@ -38,7 +38,7 @@
           <ul class="space-y-2.5 inline-block text-left">
             <li><NuxtLink to="/about" class="footer-link">About Us</NuxtLink></li>
             <li><NuxtLink to="/products" class="footer-link">Products</NuxtLink></li>
-            <li><NuxtLink to="/blogs" class="footer-link">Blog</NuxtLink></li>
+            <li><NuxtLink to="/blogs" class="footer-link">News</NuxtLink></li>
             <li><NuxtLink to="/contact" class="footer-link">Contact Us</NuxtLink></li>
           </ul>
         </div>

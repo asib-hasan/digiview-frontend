@@ -4,8 +4,8 @@
     <div class="pt-8 md:pt-10 pb-6 md:pb-8 bg-white border-b border-slate-100">
       <div class="container mx-auto px-4 md:px-8">
         
-        <NuxtLink to="/products" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[#e32727] transition-colors mb-4 md:mb-6 print:hidden">
-          <Icon name="lucide:arrow-left" class="w-4 h-4" /> Back to Products
+        <NuxtLink to="/software" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[#e32727] transition-colors mb-4 md:mb-6 print:hidden">
+          <Icon name="lucide:arrow-left" class="w-4 h-4" /> Back to Software
         </NuxtLink>
         
         <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-800 mb-3 tracking-tight leading-snug break-words">{{ product.title }}</h1>
@@ -70,7 +70,7 @@
             </button>
             
             <a 
-              :href="`https://wa.me/18001234567?text=Hi, I am interested in ${product.title} (${product.dvCode})`" 
+              :href="`https://wa.me/18001234567?text=Hi, I am interested in ${product.title} (${product.dvCode || ''})`" 
               target="_blank"
               class="w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] shrink-0 bg-[#25D366] flex items-center justify-center text-white hover:bg-[#20bd5a] hover:scale-105 rounded-xl transition-all shadow-sm"
               title="WhatsApp"
@@ -100,7 +100,7 @@
       <div class="mt-12 md:mt-16 pt-8 border-t border-slate-200 print:hidden">
         <div class="flex flex-wrap gap-2 md:gap-4 border-b border-slate-200 pb-4">
           <button 
-            v-for="tab in ['Description', 'Specifications', 'Accessories', 'Downloads']"
+            v-for="tab in ['Description', 'Specifications', 'Downloads']"
             :key="tab"
             @click="activeTab = tab.toLowerCase()"
             class="px-6 py-2.5 rounded-lg text-sm md:text-[15px] font-semibold transition-colors"
@@ -119,79 +119,6 @@
             <h4 class="font-bold text-slate-900 mb-4">Technical Specifications</h4>
             <div v-if="product.specs" class="prose prose-sm md:prose-base max-w-none text-slate-600" v-html="product.specs"></div>
             <div v-else class="text-sm text-slate-500 italic">No specifications available.</div>
-          </div>
-          <div v-if="activeTab === 'accessories'" class="animate-fade-in">
-
-            <!-- Minimal Categorized Accessories Side-by-Side Layout -->
-            <div v-if="categorizedAccessories.length > 0" class="flex flex-col md:flex-row gap-6 items-start">
-              
-              <!-- Minimal Left Sidebar: Category List -->
-              <div class="w-full md:w-60 flex-shrink-0 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm divide-y divide-slate-100">
-                <button
-                  v-for="(catGroup, idx) in categorizedAccessories"
-                  :key="catGroup.id"
-                  @click="activeAccessoryCategoryIndex = idx"
-                  class="w-full text-left px-4 py-3 text-xs md:text-sm font-semibold flex items-center justify-between transition-all"
-                  :class="[
-                    activeAccessoryCategoryIndex === idx
-                      ? 'bg-red-50/70 text-[#e32727] font-bold border-l-4 border-[#e32727] pl-3'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-l-4 border-transparent'
-                  ]"
-                >
-                  <span class="truncate pr-2">{{ catGroup.name }}</span>
-                  <Icon name="lucide:chevron-right" class="w-3.5 h-3.5 flex-shrink-0" :class="{ 'text-[#e32727]': activeAccessoryCategoryIndex === idx, 'text-slate-300': activeAccessoryCategoryIndex !== idx }" />
-                </button>
-              </div>
-
-              <!-- Right Content Area: Active Category Products Grid -->
-              <div class="flex-1 w-full min-w-0">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="text-base font-bold text-slate-800">{{ activeAccessoryCategory?.name }}</h3>
-                  <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
-                    {{ activeAccessoryCategory?.products?.length || 0 }} Items
-                  </span>
-                </div>
-
-                <div v-if="activeAccessoryCategory?.products && activeAccessoryCategory.products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  <div
-                    v-for="acc in activeAccessoryCategory.products"
-                    :key="acc.id"
-                    class="group bg-white border border-slate-200 hover:border-[#e32727] rounded-xl p-3 transition-all duration-300 hover:shadow-md flex flex-col relative"
-                  >
-                    <!-- Image -->
-                    <div class="bg-slate-50 rounded-lg p-4 aspect-square flex items-center justify-center relative overflow-hidden group-hover:bg-slate-100/80 transition-colors">
-                      <img :src="acc.image || '/product.png'" :alt="acc.title" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 mix-blend-multiply" />
-                    </div>
-
-                    <!-- Content -->
-                    <div class="pt-3 flex flex-col flex-grow">
-                      <p v-if="acc.mfr_code || acc.dv_code" class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1 truncate">{{ acc.mfr_code || acc.dv_code }}</p>
-                      <h4 class="font-bold text-slate-800 text-xs line-clamp-2 leading-snug group-hover:text-[#e32727] transition-colors mb-3">
-                        <NuxtLink :to="'/products/' + acc.slug" class="focus:outline-none">
-                          <span class="absolute inset-0" aria-hidden="true" />
-                          {{ acc.title }}
-                        </NuxtLink>
-                      </h4>
-
-                      <div class="mt-auto pt-1 relative z-20">
-                        <NuxtLink :to="'/products/' + acc.slug" class="inline-flex items-center gap-1 text-[11px] font-bold text-[#e32727] hover:underline">
-                          View Details <Icon name="lucide:arrow-right" class="w-3 h-3" />
-                        </NuxtLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div v-else class="text-slate-400 italic text-xs py-8 text-center bg-white border border-slate-200 rounded-xl">
-                  No items assigned to this accessory category.
-                </div>
-              </div>
-
-            </div>
-
-            <div v-else class="text-slate-400 italic text-xs py-8 text-center bg-white border border-slate-200 rounded-xl">
-              No accessories found.
-            </div>
           </div>
           <div v-if="activeTab === 'downloads'" class="animate-fade-in">
             <h2 class="text-2xl font-black text-slate-800 mb-6">Downloads</h2>
@@ -241,8 +168,8 @@
   <div v-else class="min-h-screen flex items-center justify-center text-center px-4 bg-slate-50">
     <div>
       <div class="text-6xl font-black text-slate-200 mb-4">404</div>
-      <h1 class="text-2xl font-bold text-slate-800 mb-3">Product Not Found</h1>
-      <NuxtLink to="/products" class="px-6 py-3 bg-[#e32727] text-white font-semibold rounded-xl">Back to Products</NuxtLink>
+      <h1 class="text-2xl font-bold text-slate-800 mb-3">Software Not Found</h1>
+      <NuxtLink to="/software" class="px-6 py-3 bg-[#e32727] text-white font-semibold rounded-xl">Back to Software</NuxtLink>
     </div>
   </div>
 </template>
@@ -250,32 +177,25 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import RequestPriceModal from '~/components/common/RequestPriceModal.vue'
 
 const { $api } = useNuxtApp()
 const route = useRoute()
 const slug = computed(() => route.params.slug as string)
 
-const { data: response, pending, error } = await useAsyncData(`product-${slug.value}`, () => 
-  $api(`/public/products/${slug.value}`)
+const { data: response, pending, error } = await useAsyncData(`software-${slug.value}`, () => 
+  $api(`/public/products/${slug.value}`) as Promise<any>
 )
 
 const product = computed(() => response.value?.data)
-const categorizedAccessories = computed(() => product.value?.categorized_accessories || [])
-const activeAccessoryCategoryIndex = ref(0)
-const activeAccessoryCategory = computed(() => {
-  if (categorizedAccessories.value.length > 0) {
-    return categorizedAccessories.value[activeAccessoryCategoryIndex.value] || categorizedAccessories.value[0]
-  }
-  return null
-})
 const downloads = computed(() => product.value?.downloads || [])
 
 const allImages = computed(() => {
   if (!product.value) return []
-  const imgs = []
+  const imgs: string[] = []
   if (product.value.image) imgs.push(product.value.image)
   if (product.value.images && Array.isArray(product.value.images)) {
-    product.value.images.forEach(img => {
+    product.value.images.forEach((img: any) => {
       const url = typeof img === 'string' ? img : img.image
       if (url && url !== product.value.image) imgs.push(url)
     })
@@ -305,7 +225,6 @@ const shareProduct = async () => {
       console.log('Share failed:', err)
     }
   } else {
-    // Fallback: copy to clipboard
     navigator.clipboard.writeText(window.location.href)
     alert('Link copied to clipboard!')
   }
@@ -316,7 +235,7 @@ const printPage = () => {
 }
 
 useSeoMeta({
-  title: computed(() => product.value ? `${product.value.title} — Digiview Broadcast` : 'Product Not Found'),
+  title: computed(() => product.value ? `${product.value.title} — Digiview Broadcast` : 'Software Not Found'),
   description: computed(() => product.value?.short_description ?? ''),
 })
 </script>
@@ -328,66 +247,42 @@ useSeoMeta({
   }
   .container {
     padding: 0;
-    max-width: 100%;
+    max-width: 100% !important;
   }
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-/* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+.product-description-content :deep(p) {
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
 }
 
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.product-description-content :deep(ul) {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
-/* Product Description Video Frame (1280x720 / 16:9) */
-:deep(.product-description-content iframe),
-:deep(.product-description-content video),
-:deep(.product-description-content .ql-video),
-:deep(.prose iframe),
-:deep(.prose video),
-:deep(.prose .ql-video) {
-  width: 100%;
-  max-width: 1280px;
-  aspect-ratio: 16 / 9;
-  height: auto;
-  border-radius: 0.75rem;
+.product-description-content :deep(ol) {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.product-description-content :deep(h1),
+.product-description-content :deep(h2),
+.product-description-content :deep(h3),
+.product-description-content :deep(h4) {
+  color: #1e293b;
+  font-weight: 700;
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
-}
-
-@media (min-width: 1280px) {
-  :deep(.product-description-content iframe),
-  :deep(.product-description-content video),
-  :deep(.product-description-content .ql-video),
-  :deep(.prose iframe),
-  :deep(.prose video),
-  :deep(.prose .ql-video) {
-    width: 1280px;
-    height: 720px;
-    max-width: 100%;
-  }
+  margin-bottom: 0.75rem;
 }
 </style>

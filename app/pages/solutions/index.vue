@@ -66,7 +66,8 @@
           <div 
             v-for="(solution, index) in solutions" 
             :key="solution.id"
-            class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center group/solution"
+            :id="`solution-${solution.id}`"
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center group/solution scroll-mt-28 md:scroll-mt-36"
           >
             <!-- Image Side -->
             <div 
@@ -150,11 +151,30 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from 'vue'
+import { reactive, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const { $api } = useNuxtApp()
+const route = useRoute()
 const { data: solutionsResponse } = await useAsyncData('solutions', () => $api('/public/solutions') as Promise<any>)
 const solutions = computed(() => solutionsResponse.value?.data || [])
+
+const scrollToTargetHash = () => {
+  if (route.hash && import.meta.client) {
+    const el = document.querySelector(route.hash)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+}
+
+onMounted(() => {
+  setTimeout(scrollToTargetHash, 400)
+})
+
+watch(() => route.hash, () => {
+  setTimeout(scrollToTargetHash, 100)
+})
 
 useSeoMeta({
   title: 'Solutions — Digiview Broadcast',

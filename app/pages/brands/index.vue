@@ -90,17 +90,21 @@
           </div>
 
           <!-- Square Related Image Banner -->
-          <div class="relative aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
+          <NuxtLink 
+            :to="settings.top_deal_link || '/products'"
+            class="relative aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group block"
+          >
             <img
-              src="/images/banner2.png"
-              alt="Featured Gear"
+              :src="settings.top_deal_image || '/images/banner2.png'"
+              :alt="settings.top_deal_title || 'Featured Gear'"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex flex-col justify-end p-8">
-              <span class="text-[#e32727] font-black text-xs uppercase tracking-widest mb-1">Premium Quality</span>
-              <h3 class="text-white font-black text-2xl">Broadcast Studio Excellence</h3>
+              <span class="text-[#e32727] font-black text-xs uppercase tracking-widest mb-1">{{ settings.top_deal_tag || 'Premium Quality' }}</span>
+              <h3 class="text-white font-black text-2xl">{{ settings.top_deal_title || 'Broadcast Studio Excellence' }}</h3>
+              <p v-if="settings.top_deal_subtitle" class="text-white/80 text-sm mt-1">{{ settings.top_deal_subtitle }}</p>
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </div>
     </section>
@@ -120,6 +124,8 @@ useHead({
 const { $api } = useNuxtApp()
 
 const { data: brandsResponse, pending } = await useAsyncData('all-brands', () => $api('/public/brands') as Promise<any>)
+const { data: settingsResponse } = await useAsyncData('brands-settings', () => $api('/public/settings') as Promise<any>)
 
 const brands = computed(() => brandsResponse.value?.data || [])
+const settings = computed(() => settingsResponse.value?.data || {})
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-detail-page bg-white min-h-screen pt-40 md:pt-48 pb-20">
+  <div class="blog-detail-page bg-white min-h-screen pt-12 md:pt-16 pb-20">
     <div v-if="blog" class="container mx-auto px-4 md:px-8 max-w-7xl">
       
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">

@@ -51,13 +51,13 @@
             <!-- Quick Action Overlay on Hover -->
             <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
               <NuxtLink 
-                :to="`/products/${product.slug}`" 
+                :to="product.link" 
                 class="px-4 py-2 bg-white text-slate-900 hover:bg-[#e32727] hover:text-white font-bold rounded-lg text-xs transition-colors shadow-md flex-1 text-center"
               >
                 View Details
               </NuxtLink>
               <NuxtLink 
-                :to="`/products/${product.slug}?tab=specifications`" 
+                :to="`${product.link}?tab=specifications`" 
                 class="p-2 bg-white/20 hover:bg-white text-white hover:text-slate-900 rounded-lg transition-colors" 
                 title="Specifications"
               >
@@ -70,7 +70,7 @@
           <div class="flex-1 flex flex-col justify-between">
             <div>
               <h3 class="text-base font-bold text-slate-800 mb-2 leading-snug group-hover:text-[#e32727] transition-colors line-clamp-2">
-                <NuxtLink :to="`/products/${product.slug}`">{{ product.title }}</NuxtLink>
+                <NuxtLink :to="product.link">{{ product.title }}</NuxtLink>
               </h3>
               <p class="text-slate-500 text-xs line-clamp-2 mb-6">
                 {{ product.shortDesc }}
@@ -83,7 +83,7 @@
                 Authorized Dealer
               </span>
               <NuxtLink 
-                :to="`/products/${product.slug}`" 
+                :to="product.link" 
                 class="text-xs font-bold text-[#e32727] hover:text-red-700 inline-flex items-center gap-1 group/link"
               >
                 <span>Explore</span>
@@ -157,11 +157,14 @@ const categoryTabs = computed(() => {
 const products = computed(() => {
   const featured = featuredResponse.value?.data || []
   return featured.map((p: any) => ({
+    id: p.id,
     title: p.title,
     slug: p.slug,
-    category: p.category || '',
+    category: p.category || (p.type === 'digital' ? 'Software' : ''),
     shortDesc: p.short_description || '',
-    image: p.image || '/product.png'
+    image: p.image || '/product.png',
+    type: p.type || 'physical',
+    link: p.type === 'digital' ? `/software/${p.slug}` : `/products/${p.slug}`
   }))
 })
 

@@ -3,12 +3,9 @@
     <div class="container mx-auto px-4 md:px-8 mb-16">
       
       <!-- Section Heading -->
-      <div class="text-center max-w-2xl mx-auto animate-fade-in-up">
-        <div class="mb-4 inline-flex items-center gap-2 text-sm font-bold tracking-widest uppercase text-[#e32727]">
-          GLOBAL PARTNERS
-        </div>
+      <div class="text-center max-w-3xl mx-auto animate-fade-in-up">
         <h2 class="text-3xl md:text-4xl font-black text-slate-800 leading-tight">
-          Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e32727] to-red-600">Partners</span>
+          Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e32727] to-red-600">Technology Partners</span>
         </h2>
       </div>
 

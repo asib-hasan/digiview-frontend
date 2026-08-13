@@ -5,24 +5,6 @@
       subtitle="From complete studio design and system integration to 24/7 technical support, we provide end-to-end solutions for your broadcast and media infrastructure."
     />
 
-    <!-- Partners Marquee (Animated Ticker) -->
-    <section class="py-8 bg-slate-900 border-y border-slate-800 overflow-hidden shadow-inner">
-      <div class="flex overflow-hidden relative">
-        <!-- Fade masks for edges -->
-        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none"></div>
-        
-        <div class="animate-marquee flex gap-12 md:gap-20 items-center px-8">
-           <!-- Repeat twice for infinite scroll effect -->
-           <template v-for="i in 2" :key="i">
-             <div v-for="brand in brands" :key="`p-${i}-${brand.id}`" class="text-slate-500 font-black text-xl md:text-3xl uppercase tracking-[0.2em] whitespace-nowrap hover:text-white transition-colors duration-500 cursor-default flex items-center">
-               <span class="text-[#e32727] mr-4 opacity-50">/</span> {{ brand.title }}
-             </div>
-           </template>
-        </div>
-      </div>
-    </section>
-
     <!-- Services Section -->
     <section class="py-20 md:py-28 bg-[#f8f9fa] overflow-hidden">
       <div class="container mx-auto px-4 md:px-8">
@@ -185,10 +167,6 @@ const { $api } = useNuxtApp()
 // Fetch Services
 const { data: servicesResponse } = await useAsyncData('services', () => $api('/public/services') as Promise<any>)
 const services = computed(() => servicesResponse.value?.data || [])
-
-// Fetch Brands
-const { data: brandsResponse } = await useAsyncData('brands', () => $api('/public/brands') as Promise<any>)
-const brands = computed(() => brandsResponse.value?.data || [])
 
 useSeoMeta({
   title: 'Services — Digiview Broadcast',

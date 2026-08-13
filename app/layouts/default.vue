@@ -5,9 +5,10 @@
       <slot />
     </main>
     <AppFooter />
+    <CampaignPopup />
   </div>
 </template>
 
 <script setup lang="ts">
-// Default layout used by all pages
+import CampaignPopup from '~/components/common/CampaignPopup.vue'
 </script>

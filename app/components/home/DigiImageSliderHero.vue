@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full overflow-hidden bg-slate-900 group mt-16 md:mt-20 h-[40vh] md:h-[50vh] lg:h-[60vh]">
+  <div class="relative w-full overflow-hidden bg-slate-900 group aspect-[16/7] sm:aspect-[2.5/1] md:aspect-[1920/600] max-h-[600px]">
     
     <!-- Full Width Image Slider -->
     <div class="absolute inset-0 z-0">
@@ -17,26 +17,31 @@
             :target="image.url && image.url.startsWith('http') ? '_blank' : undefined"
             class="w-full h-full block relative group/slide"
           >
-            <!-- Banner Image -->
+            <!-- Banner Image (1920x600) -->
             <img 
               :src="image.src" 
-              :alt="image.alt"
+              :alt="image.alt || image.title"
               class="absolute inset-0 w-full h-full object-cover slider-image"
             />
 
-            <!-- Modern Gradient Overlay for Title & Link -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 flex items-end pb-10 md:pb-14 px-6 md:px-16 lg:px-24">
-              <div v-if="image.title" class="max-w-3xl space-y-3">
-                <!-- Animated Title -->
-                <h2 class="text-xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-xl leading-tight">
+            <!-- Modern Gradient Overlay for Title, Subtitle & Link -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 flex items-end pb-6 sm:pb-8 md:pb-10 lg:pb-12 px-6 sm:px-10 md:px-14 lg:px-20">
+              <div v-if="image.title" class="max-w-3xl space-y-1.5 sm:space-y-2.5">
+                <!-- Title -->
+                <h2 class="text-lg sm:text-2xl md:text-3xl lg:text-[36px] font-black text-white tracking-tight drop-shadow-xl leading-tight">
                   {{ image.title }}
                 </h2>
+
+                <!-- Subtitle / Middle Text (Smaller font as requested) -->
+                <p v-if="image.subtitle" class="text-xs sm:text-sm md:text-base font-medium text-slate-200 drop-shadow-md leading-snug">
+                  {{ image.subtitle }}
+                </p>
                 
-                <!-- Modern Action Button -->
-                <div v-if="image.url" class="pt-1">
-                  <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-[#e32727] backdrop-blur-md text-white text-xs md:text-sm font-bold rounded-lg transition-all duration-300 border border-white/20 group-hover/slide:border-[#e32727] group-hover/slide:bg-[#e32727]">
+                <!-- Action Button -->
+                <div v-if="image.url" class="pt-1.5 sm:pt-2">
+                  <div class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 bg-[#e32727] hover:bg-red-700 text-white text-xs sm:text-sm font-bold rounded-lg transition-all duration-300 shadow-lg group-hover/slide:scale-105">
                     <span>Explore Details</span>
-                    <Icon name="lucide:arrow-right" class="w-4 h-4 transition-transform group-hover/slide:translate-x-1" />
+                    <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover/slide:translate-x-1" />
                   </div>
                 </div>
 
@@ -94,11 +99,12 @@ const images = computed(() => {
       src: b.banner,
       alt: b.title,
       title: b.title,
+      subtitle: b.subtitle,
       url: b.url
     }))
   }
   return [
-    { src: '/images/banner1.png', alt: 'Broadcast Studio', title: 'Broadcast Studio', url: '' }
+    { src: '/images/banner1.png', alt: 'Live Broadcast Event', title: 'Live Broadcast Event', subtitle: 'kiloview live streaming solutions', url: '/products' }
   ]
 })
 
