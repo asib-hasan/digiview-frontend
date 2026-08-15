@@ -62,29 +62,29 @@
           class="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 p-4 flex flex-col h-full group animate-fade-in-up"
         >
           <!-- Image Container -->
-          <NuxtLink :to="`/software/${item.slug}`" class="aspect-[4/3] bg-slate-900 rounded-xl overflow-hidden relative mb-4 block flex items-center justify-center p-3">
+          <NuxtLink :to="`/software/${item.slug}`" class="aspect-[4/3] bg-slate-100 border border-slate-200/80 rounded-xl overflow-hidden relative mb-4 block flex items-center justify-center p-3">
             <img 
               v-if="item.image" 
               :src="item.image" 
               :alt="item.title" 
-              class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-500" 
+              class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 
             />
-            <div v-else class="text-slate-500 flex flex-col items-center">
+            <div v-else class="text-slate-400 flex flex-col items-center">
               <Icon name="lucide:cpu" class="w-8 h-8 opacity-50" />
             </div>
 
             <!-- Software Badge -->
-            <span class="absolute top-2 left-2 px-2 py-0.5 bg-white/95 text-slate-900 font-bold text-[9px] uppercase tracking-wider rounded-md shadow-xs">
-              Software
+            <span class="absolute top-2 left-2 px-2.5 py-0.5 bg-white/95 border border-slate-200 text-[#e32727] font-bold text-[10px] uppercase tracking-wider rounded-md shadow-xs">
+              software
             </span>
 
             <!-- Brand Pill -->
-            <span v-if="item.brand" class="absolute top-2 right-2 px-2 py-0.5 bg-slate-950/80 text-white font-bold text-[9px] rounded-md shadow-xs">
+            <span v-if="item.brand" class="absolute top-2 right-2 px-2.5 py-0.5 bg-white/95 border border-slate-200 text-slate-800 font-bold text-[10px] rounded-md shadow-xs">
               {{ item.brand }}
             </span>
 
             <!-- Hover Action Overlay -->
-            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-900 hover:text-[#e32727] hover:scale-110 transition-all shadow-xl">
                  <Icon name="lucide:eye" class="w-4 h-4" />
                </div>

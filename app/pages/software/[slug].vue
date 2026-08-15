@@ -66,7 +66,7 @@
               @click="isPriceModalOpen = true" 
               class="px-3 sm:px-8 py-3.5 bg-slate-500 hover:bg-slate-600 text-white font-bold transition-colors flex-1 text-center rounded-xl shadow-md uppercase tracking-widest text-[11px] sm:text-sm whitespace-nowrap"
             >
-              Request For Price
+              MAKE INQUIRY
             </button>
             
             <a 

@@ -36,9 +36,13 @@
         <div class="lg:col-span-4 text-center md:text-left lg:pl-16">
           <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Important Links</h3>
           <ul class="space-y-2.5 inline-block text-left">
-            <li><NuxtLink to="/about" class="footer-link">About Us</NuxtLink></li>
             <li><NuxtLink to="/products" class="footer-link">Products</NuxtLink></li>
-            <li><NuxtLink to="/blogs" class="footer-link">News</NuxtLink></li>
+            <li v-for="cat in footerCategories" :key="cat.id">
+              <NuxtLink :to="`/products?categories=${encodeURIComponent(cat.name)}`" class="footer-link">
+                {{ cat.name }}
+              </NuxtLink>
+            </li>
+            <li><NuxtLink to="/software" class="footer-link">Softwares</NuxtLink></li>
             <li><NuxtLink to="/contact" class="footer-link">Contact Us</NuxtLink></li>
           </ul>
         </div>
@@ -97,6 +101,9 @@ const { $api } = useNuxtApp()
 
 const { data: settingsResponse } = await useAsyncData('global-settings-footer', () => $api('/public/settings') as Promise<any>)
 const settings = computed(() => settingsResponse.value?.data || {})
+
+const { data: footerCategoriesResponse } = await useAsyncData('global-footer-links-category', () => $api('/public/footer-links-category') as Promise<any>)
+const footerCategories = computed(() => footerCategoriesResponse.value?.data || [])
 
 const email = ref('')
 const isSubmitting = ref(false)

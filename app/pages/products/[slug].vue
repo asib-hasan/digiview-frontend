@@ -66,7 +66,7 @@
               @click="isPriceModalOpen = true" 
               class="px-3 sm:px-8 py-3.5 bg-slate-500 hover:bg-slate-600 text-white font-bold transition-colors flex-1 text-center rounded-xl shadow-md uppercase tracking-widest text-[11px] sm:text-sm whitespace-nowrap"
             >
-              Request For Price
+              MAKE INQUIRY
             </button>
             
             <a 
@@ -358,7 +358,7 @@ useSeoMeta({
   overflow: hidden;
 }
 
-/* Product Description Video Frame (1280x720 / 16:9) */
+/* Product Description Video Frame (854x480 / 16:9) */
 :deep(.product-description-content iframe),
 :deep(.product-description-content video),
 :deep(.product-description-content .ql-video),
@@ -366,7 +366,7 @@ useSeoMeta({
 :deep(.prose video),
 :deep(.prose .ql-video) {
   width: 100%;
-  max-width: 1280px;
+  max-width: 854px;
   aspect-ratio: 16 / 9;
   height: auto;
   border-radius: 0.75rem;
@@ -378,15 +378,15 @@ useSeoMeta({
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 854px) {
   :deep(.product-description-content iframe),
   :deep(.product-description-content video),
   :deep(.product-description-content .ql-video),
   :deep(.prose iframe),
   :deep(.prose video),
   :deep(.prose .ql-video) {
-    width: 1280px;
-    height: 720px;
+    width: 854px;
+    height: 480px;
     max-width: 100%;
   }
 }

@@ -306,7 +306,7 @@ h6 {
   animation: slideRight 0.7s ease-out forwards;
 }
 
-/* ─── Video Frame 1280x720 (16:9) ────────────────────────── */
+/* ─── Video Frame 854x480 (16:9) ────────────────────────── */
 .prose iframe,
 .prose video,
 .prose .ql-video,
@@ -315,7 +315,7 @@ h6 {
 .product-description-content .ql-video,
 iframe.ql-video {
   width: 100%;
-  max-width: 1280px;
+  max-width: 854px;
   aspect-ratio: 16 / 9;
   height: auto;
   border-radius: 0.75rem;
@@ -326,7 +326,7 @@ iframe.ql-video {
   display: block;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 854px) {
   .prose iframe,
   .prose video,
   .prose .ql-video,
@@ -334,8 +334,8 @@ iframe.ql-video {
   .product-description-content video,
   .product-description-content .ql-video,
   iframe.ql-video {
-    width: 1280px;
-    height: 720px;
+    width: 854px;
+    height: 480px;
     max-width: 100%;
   }
 }

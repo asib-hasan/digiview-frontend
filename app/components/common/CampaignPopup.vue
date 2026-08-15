@@ -72,12 +72,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useNuxtApp, useAsyncData, useRoute, navigateTo } from '#app'
 
 const { $api } = useNuxtApp()
 const route = useRoute()
 const isOpen = ref(false)
+let autoCloseTimer: ReturnType<typeof setTimeout> | null = null
 
 const { data: settingsResponse } = await useAsyncData('global-settings-popup', () => 
   $api('/public/settings') as Promise<any>
@@ -86,6 +87,10 @@ const { data: settingsResponse } = await useAsyncData('global-settings-popup', (
 const settings = computed(() => settingsResponse.value?.data || {})
 
 const closePopup = () => {
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
   isOpen.value = false
 }
 
@@ -124,9 +129,19 @@ onMounted(() => {
       setTimeout(() => {
         if (route.path === '/') {
           isOpen.value = true
+          // Auto close after 10 seconds
+          autoCloseTimer = setTimeout(() => {
+            closePopup()
+          }, 10000)
         }
       }, 500) // Smooth initial delay on home page reload/open
     }
+  }
+})
+
+onBeforeUnmount(() => {
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
   }
 })
 </script>

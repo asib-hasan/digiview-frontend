@@ -1,5 +1,5 @@
 <template>
-  <section class="py-12 md:py-20 bg-slate-50 relative overflow-hidden">
+  <section class="pt-6 pb-12 md:pt-10 md:pb-20 bg-slate-50 relative overflow-hidden">
     <div class="container mx-auto px-4 md:px-8">
       
       <!-- Dynamic DB Category Tabs (Placed on Top) -->
