@@ -87,12 +87,14 @@
               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all appearance-none bg-white"
             >
               <option value="" disabled selected>Select Industry</option>
-              <option value="TV Broadcaster">TV Broadcaster</option>
-              <option value="Audio Visual">Audio Visual</option>
-              <option value="Corporate">Corporate</option>
-              <option value="Reseller">Reseller</option>
-              <option value="Radio & Film">Radio & Film</option>
-              <option value="Youtuber">Youtuber</option>
+              <option value="TV Broadcast">TV Broadcast</option>
+              <option value="ProAV/Corporate">ProAV/Corporate</option>
+              <option value="Studio/Virtual Sets">Studio/Virtual Sets</option>
+              <option value="Content Creator">Content Creator</option>
+              <option value="Radio/Audio">Radio/Audio</option>
+              <option value="News Agency (AV)">News Agency (AV)</option>
+              <option value="Film/Animation">Film/Animation</option>
+              <option value="Other">Other</option>
             </select>
             <!-- Dropdown Icon -->
             <div class="relative">

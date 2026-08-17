@@ -183,11 +183,11 @@
                         v-for="brand in link.brands" 
                         :key="brand.name" 
                         :to="brand.path" 
-                        class="border border-slate-200 rounded-lg aspect-square p-2 flex flex-col items-center justify-center hover:border-[#e32727] hover:shadow-md transition-all group/brand bg-white"
+                        class="border border-slate-200 rounded-xl aspect-square p-3 flex items-center justify-center hover:border-[#e32727] hover:shadow-md transition-all group/brand bg-white overflow-hidden"
+                        :title="brand.name"
                       >
-                        <Icon v-if="brand.icon" :name="brand.icon" class="w-10 h-10 text-slate-700 group-hover/brand:text-[#e32727] transition-colors mb-2" />
-                        <img v-else-if="brand.logo" :src="brand.logo" class="w-12 h-12 object-contain mb-2 opacity-80 group-hover/brand:opacity-100 transition-opacity" />
-                        <span class="text-[11px] font-bold text-slate-600 group-hover/brand:text-[#e32727] text-center line-clamp-1">{{ brand.name }}</span>
+                        <Icon v-if="brand.icon" :name="brand.icon" class="w-12 h-12 text-slate-700 group-hover/brand:text-[#e32727] transition-colors" />
+                        <img v-else-if="brand.logo" :src="brand.logo" :alt="brand.name" class="max-w-full max-h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                       </NuxtLink>
                     </div>
                   </div>

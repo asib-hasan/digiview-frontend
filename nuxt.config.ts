@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  // SSR Mode: True Server-Side Rendering (Requires Node.js server deployment)
+  ssr: true,
+
   modules: [
     '@nuxt/ui',
     '@vueuse/nuxt',
@@ -13,7 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: process.env.API_URL || 'https://demo3.ctpbd.info/api',
+      apiUrl: process.env.API_URL || 'https://admin.digiview.biz/api',
     }
   },
 
@@ -41,17 +44,20 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'ATT — Asian Traffic Technologies Ltd',
+      title: 'Digiview — Professional Broadcast & Media Solutions',
       htmlAttrs: { lang: 'en' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
-          content: 'Asian Traffic Technologies Ltd — Leading provider of Intelligent Transportation Systems, Toll Collection, Traffic Monitoring, and Access Control solutions in Bangladesh.',
+          content: 'Digiview Broadcast Technologies — Leading provider of 4K TV & Radio Studio Infrastructure, Live Event Coverage, OB Vans, and Media Production Software in Bangladesh.',
         },
       ],
       link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+        { rel: 'shortcut icon', href: '/favicon.png' },
+        { rel: 'apple-touch-icon', href: '/favicon.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

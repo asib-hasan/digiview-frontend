@@ -201,23 +201,45 @@
               <div v-for="dl in downloads" :key="dl.id" class="group flex flex-col p-5 border border-slate-200 rounded-2xl hover:border-[#e32727] hover:shadow-lg bg-white transition-all duration-300">
                 <div class="flex items-center gap-4 mb-5">
                   <div class="w-14 h-14 rounded-xl bg-red-50 text-[#e32727] flex items-center justify-center shrink-0 group-hover:bg-[#e32727] group-hover:text-white transition-colors">
-                    <Icon :name="dl.type === 'pdf' ? 'lucide:file-text' : 'lucide:link'" class="w-6 h-6" />
+                    <Icon :name="getDownloadIcon(dl.file_type || (dl.type === 'link' ? 'link' : 'pdf'))" class="w-6 h-6" />
                   </div>
-                  <div class="flex-grow">
-                    <h4 class="text-[15px] font-bold text-slate-800 group-hover:text-[#e32727] transition-colors line-clamp-1 mb-1">{{ dl.title }}</h4>
+                  <div class="flex-grow min-w-0">
+                    <h4 class="text-[15px] font-bold text-slate-800 group-hover:text-[#e32727] transition-colors truncate mb-1" :title="dl.title">{{ dl.title }}</h4>
                     <div class="text-xs text-slate-500 flex items-center gap-2">
-                      <span class="uppercase font-black tracking-widest text-[9px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">{{ dl.type === 'pdf' ? 'PDF' : 'LINK' }}</span>
+                      <span class="uppercase font-black tracking-widest text-[9px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
+                        {{ dl.file_type || (dl.type === 'link' ? 'LINK' : 'PDF') }}
+                      </span>
                     </div>
                   </div>
                 </div>
                 
                 <div class="flex items-center gap-2 mt-auto">
-                  <a v-if="dl.type === 'pdf'" :href="dl.file_path" target="_blank" class="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#e32727] hover:bg-red-700 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl transition-colors shadow-sm">
-                    <Icon name="lucide:download" class="w-3.5 h-3.5" /> Download
+                  <a 
+                    v-if="dl.type === 'link'"
+                    :href="dl.link_url" 
+                    target="_blank" 
+                    class="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#e32727] hover:bg-red-700 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl transition-colors shadow-sm"
+                  >
+                    <Icon name="lucide:external-link" class="w-3.5 h-3.5" /> {{ dl.title || 'Open Link' }}
                   </a>
-                  <a v-else :href="dl.link_url" target="_blank" class="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#e32727] hover:bg-red-700 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl transition-colors shadow-sm">
-                    <Icon name="lucide:external-link" class="w-3.5 h-3.5" /> Open Link
-                  </a>
+                  <template v-else>
+                    <a 
+                      v-if="dl.file_type === 'pdf' || !dl.file_type"
+                      :href="dl.file_path" 
+                      target="_blank" 
+                      class="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold uppercase tracking-widest rounded-xl transition-colors"
+                    >
+                      <Icon name="lucide:eye" class="w-3.5 h-3.5" /> Preview
+                    </a>
+                    <a 
+                      :href="dl.file_path" 
+                      :download="dl.title"
+                      target="_blank" 
+                      class="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#e32727] hover:bg-red-700 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl transition-colors shadow-sm"
+                    >
+                      <Icon name="lucide:download" class="w-3.5 h-3.5" /> Download
+                    </a>
+                  </template>
                 </div>
               </div>
 
@@ -269,6 +291,27 @@ const activeAccessoryCategory = computed(() => {
   return null
 })
 const downloads = computed(() => product.value?.downloads || [])
+
+const getDownloadIcon = (fileType: string) => {
+  const type = fileType?.toLowerCase()
+  switch (type) {
+    case 'pdf': return 'lucide:file-text'
+    case 'docx':
+    case 'doc': return 'lucide:file-text'
+    case 'zip':
+    case 'rar': return 'lucide:file-archive'
+    case 'mp4':
+    case 'video': return 'lucide:video'
+    case 'mp3':
+    case 'audio': return 'lucide:music'
+    case 'exe': return 'lucide:terminal'
+    case 'cad': return 'lucide:layers'
+    case 'dmg': return 'lucide:disc'
+    case 'bin': return 'lucide:cpu'
+    case 'link': return 'lucide:link'
+    default: return 'lucide:file-text'
+  }
+}
 
 const allImages = computed(() => {
   if (!product.value) return []

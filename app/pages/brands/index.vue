@@ -29,30 +29,26 @@
             v-for="brand in brands"
             :key="brand.id"
             :to="`/products?brands=${encodeURIComponent(brand.title)}`"
-            class="group bg-white border border-slate-200 rounded-2xl aspect-square p-6 flex flex-col items-center justify-center hover:border-[#e32727] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+            class="group bg-white border border-slate-200 rounded-2xl aspect-square p-6 flex items-center justify-center hover:border-[#e32727] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+            :title="brand.title"
           >
             <!-- Top Right Red Accent on Hover -->
             <div class="absolute -top-10 -right-10 w-20 h-20 bg-[#e32727]/10 rounded-full group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
 
             <!-- Brand Logo -->
-            <div class="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center mb-3">
+            <div class="w-full h-full flex items-center justify-center">
               <img
                 v-if="brand.logo"
                 :src="brand.logo"
                 :alt="brand.title"
-                class="max-w-full max-h-full object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
+                class="max-w-full max-h-full object-contain opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
               />
               <Icon
                 v-else
                 name="lucide:award"
-                class="w-12 h-12 text-slate-400 group-hover:text-[#e32727] transition-colors"
+                class="w-14 h-14 text-slate-400 group-hover:text-[#e32727] transition-colors"
               />
             </div>
-
-            <!-- Brand Title -->
-            <h3 class="text-sm font-bold text-slate-700 group-hover:text-[#e32727] text-center line-clamp-1 transition-colors">
-              {{ brand.title }}
-            </h3>
           </NuxtLink>
         </div>
 
