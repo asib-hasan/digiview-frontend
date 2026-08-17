@@ -77,15 +77,8 @@
       </div>
 
       <!-- Bottom Bar -->
-      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-        <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-center md:text-left">
-          <p>© {{ currentYear }} Digiview Broadcast Technologies. All rights reserved.</p>
-          <p class="md:border-l md:border-gray-700 md:pl-4">Developed By <a href="https://creativetechpark.com/" target="_blank" class="text-white hover:text-[#e32727] font-semibold transition-colors">Creative Tech Park</a></p>
-        </div>
-        <div class="flex gap-6">
-          <NuxtLink to="/privacy" class="hover:text-white transition-colors">Privacy Policy</NuxtLink>
-          <NuxtLink to="/terms" class="hover:text-white transition-colors">Terms of Service</NuxtLink>
-        </div>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-center gap-4 text-sm text-gray-500 text-center">
+        <p>© {{ currentYear }} Digiview Broadcast Technologies. All rights reserved.</p>
       </div>
     </div>
   </footer>

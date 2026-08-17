@@ -22,7 +22,7 @@
           v-for="(s, index) in solutions.slice(0, 8)"
           :key="s.slug"
           v-animate="`animate-fade-up delay-${(index + 3) * 100}`"
-          :to="'/solutions/toll-management'"
+          :to="'/solutions/' + s.slug"
           :title="s.title"
           :description="s.shortDesc"
           :icon="s.icon"
