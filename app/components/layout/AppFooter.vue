@@ -17,9 +17,6 @@
             <a v-if="settings.facebook" :href="settings.facebook" target="_blank" aria-label="Facebook" class="social-icon">
               <Icon name="lucide:facebook" class="w-5 h-5" />
             </a>
-            <a v-if="settings.twitter" :href="settings.twitter" target="_blank" aria-label="Twitter" class="social-icon">
-              <Icon name="lucide:twitter" class="w-5 h-5" />
-            </a>
             <a v-if="settings.instagram" :href="settings.instagram" target="_blank" aria-label="Instagram" class="social-icon">
               <Icon name="lucide:instagram" class="w-5 h-5" />
             </a>

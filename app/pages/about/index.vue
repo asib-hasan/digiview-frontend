@@ -18,7 +18,7 @@
               v-observe class="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl z-10"
               :class="{ 'animate-fade-up': observed.has($el) }"
             >
-              <img src="/slider/2.webp" alt="Broadcast Studio" class="w-full h-full object-cover" />
+              <img src="/images/about-intro.jpeg" alt="Broadcast Studio" class="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -55,7 +55,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2">
         <!-- Left: Image -->
         <div v-observe class="relative min-h-[400px] lg:min-h-[600px]" :class="{ 'animate-image-reveal': observed.has($el) }">
-          <img src="/images/mission_vision_bg.png" alt="Broadcast Studio Equipment" class="w-full h-full object-cover" />
+          <img src="/images/about-mission-vision.jpeg" alt="Broadcast Studio Equipment" class="w-full h-full object-cover" />
         </div>
 
         <!-- Right: Mission/Vision/Goal -->
@@ -120,7 +120,7 @@
 
           <!-- Center Image -->
           <div v-observe class="hidden lg:block" :class="{ 'animate-fade-up delay-300': observed.has($el) }">
-            <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=600" alt="Broadcast Equipment" class="w-full rounded-2xl shadow-xl" />
+            <img src="/images/about-why-choose.jpeg" alt="Broadcast Equipment" class="w-full rounded-2xl shadow-xl" />
           </div>
 
           <!-- Right Column -->
@@ -192,20 +192,10 @@
             </div>
           </div>
 
-          <!-- Right: Image + Contact Badge -->
+          <!-- Right: Image -->
           <div class="relative">
             <div v-observe class="rounded-2xl overflow-hidden shadow-2xl" :class="{ 'animate-image-reveal': observed.has($el) }">
-              <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&q=80&w=800" alt="Broadcast Expertise" class="w-full h-[500px] object-cover" />
-            </div>
-            <!-- Floating Contact Badge -->
-            <div class="absolute -bottom-6 -left-6 md:left-6 bg-slate-900 rounded-2xl p-5 shadow-xl flex items-center gap-4 z-10">
-              <div class="w-12 h-12 rounded-full bg-[#e32727] flex items-center justify-center">
-                <Icon name="lucide:phone" class="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">24/7 Support</p>
-                <a href="tel:+8801234567890" class="text-white font-black text-lg hover:text-[#e32727] transition-colors">+880 1234-567890</a>
-              </div>
+              <img src="/images/about-expertise.jpeg" alt="Broadcast Expertise" class="w-full h-[500px] object-cover" />
             </div>
           </div>
 

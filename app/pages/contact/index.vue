@@ -44,21 +44,24 @@
             <div v-if="settings" v-observe class="pt-6 border-t border-slate-200" :class="{ 'animate-fade-up delay-700': observed.has($el) }">
               <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest mb-4">Follow Us</h3>
               <div class="flex items-center gap-4">
-                <a v-if="settings.facebook" :href="settings.facebook" target="_blank" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
+                <a v-if="settings.facebook" :href="settings.facebook" target="_blank" aria-label="Facebook" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
                   <Icon name="fa-brands:facebook-f" class="w-5 h-5" />
                 </a>
-                <a v-if="settings.instagram" :href="settings.instagram" target="_blank" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
+                <a v-if="settings.instagram" :href="settings.instagram" target="_blank" aria-label="Instagram" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
                   <Icon name="fa-brands:instagram" class="w-5 h-5" />
                 </a>
-                <a v-if="settings.youtube" :href="settings.youtube" target="_blank" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
+                <a v-if="settings.youtube" :href="settings.youtube" target="_blank" aria-label="YouTube" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
                   <Icon name="fa-brands:youtube" class="w-5 h-5" />
+                </a>
+                <a v-if="settings.linkedin" :href="settings.linkedin" target="_blank" aria-label="LinkedIn" class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-[#e32727] hover:text-white hover:border-[#e32727] transition-all">
+                  <Icon name="fa-brands:linkedin-in" class="w-5 h-5" />
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Right: Contact Form (3 cols) -->
-          <div class="lg:col-span-3">
+          <!-- Right: Contact Form & Map (3 cols) -->
+          <div class="lg:col-span-3 space-y-8">
             <div v-observe class="bg-white rounded-[2rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-8 md:p-12 relative overflow-hidden" :class="{ 'animate-fade-up delay-300': observed.has($el) }">
               <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#e32727] to-[#ff6b6b]"></div>
               
@@ -131,6 +134,29 @@
                   <Icon v-if="!submitting" name="lucide:send" class="w-4 h-4" />
                 </button>
               </form>
+            </div>
+
+            <!-- Our Location Section -->
+            <div v-observe class="bg-white rounded-[2rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-6 md:p-8 relative overflow-hidden" :class="{ 'animate-fade-up delay-500': observed.has($el) }">
+              <div class="mb-6">
+                <div class="flex items-center gap-2 text-[#e32727] font-bold text-xs uppercase tracking-widest mb-1">
+                  <Icon name="lucide:map-pin" class="w-4 h-4" />
+                  <span>Find Us</span>
+                </div>
+                <h3 class="text-xl md:text-2xl font-black text-slate-900">Our location</h3>
+              </div>
+
+              <!-- Map Container -->
+              <div class="relative w-full h-[320px] md:h-[380px] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner group">
+                <iframe
+                  :src="mapEmbedSrc"
+                  class="w-full h-full border-0"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Digiview Location Map"
+                ></iframe>
+              </div>
             </div>
           </div>
         </div>
@@ -249,6 +275,20 @@ const contactInfo = computed(() => {
   }
 
   return info
+})
+
+// ── Google Maps Embed ──
+const mapEmbedSrc = computed(() => {
+  if (settings.value.google_map_embed) {
+    const raw = String(settings.value.google_map_embed).trim()
+    if (raw.startsWith('<iframe')) {
+      const match = raw.match(/src=["']([^"']+)["']/)
+      if (match && match[1]) return match[1]
+    }
+    return raw
+  }
+  // Default coordinates from Purana Paltan, Dhaka (https://maps.app.goo.gl/eagfhCMyDPDZt6Nj8)
+  return 'https://maps.google.com/maps?q=23.731765,90.412053&hl=en&z=17&output=embed'
 })
 </script>
 
