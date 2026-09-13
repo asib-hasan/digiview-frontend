@@ -9,8 +9,8 @@
           <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">News & Articles</h2>
           <p class="text-slate-500 text-lg">Stay updated with the latest trends in traffic technology, toll management, and infrastructure development.</p>
         </div>
-        <NuxtLink to="/blogs" class="inline-flex items-center justify-center px-6 py-3 border border-slate-200 text-sm font-semibold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors gap-2 group flex-shrink-0">
-          View All Blogs
+        <NuxtLink to="/news" class="inline-flex items-center justify-center px-6 py-3 border border-slate-200 text-sm font-semibold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors gap-2 group flex-shrink-0">
+          View All News
           <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
@@ -19,7 +19,7 @@
 
       <div class="grid md:grid-cols-3 gap-8">
         <article v-for="blog in recentBlogs" :key="blog.id" class="bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300 group flex flex-col">
-          <NuxtLink :to="`/blogs/${blog.slug}`" class="block h-52 bg-slate-100 relative overflow-hidden">
+          <NuxtLink :to="`/news/${blog.slug}`" class="block h-52 bg-slate-100 relative overflow-hidden">
             <!-- Decorative gradient fallback since we don't have guaranteed images -->
             <img v-if="blog.image" :src="blog.image" :alt="blog.title" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             <div v-else class="absolute inset-0 bg-gradient-to-br from-blue-100 to-indigo-50 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
@@ -40,7 +40,7 @@
               </span>
             </div>
             
-            <NuxtLink :to="`/blogs/${blog.slug}`" class="block group-hover:text-blue-600 transition-colors">
+            <NuxtLink :to="`/news/${blog.slug}`" class="block group-hover:text-blue-600 transition-colors">
               <h3 class="text-xl font-bold text-slate-900 mb-3 line-clamp-2 leading-tight">{{ blog.title }}</h3>
             </NuxtLink>
             
@@ -48,7 +48,7 @@
               {{ blog.excerpt }}
             </p>
             
-            <NuxtLink :to="`/blogs/${blog.slug}`" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors group/link mt-auto">
+            <NuxtLink :to="`/news/${blog.slug}`" class="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors group/link mt-auto">
               Read Article
               <svg class="w-4 h-4 ml-1.5 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />

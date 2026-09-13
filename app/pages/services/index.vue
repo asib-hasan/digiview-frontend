@@ -73,14 +73,6 @@
                 { 'animate-fade-up delay-300': observed.has($el) }
               ]"
             >
-              <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 text-[#e32727] text-xs font-black mb-6 tracking-widest uppercase shadow-sm border border-red-100">
-                <span class="relative flex h-2.5 w-2.5">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#e32727]"></span>
-                </span>
-                Service 0{{ index + 1 }}
-              </div>
-              
               <h3 class="text-3xl md:text-4xl font-black text-slate-800 mb-6 leading-tight group-hover/service:text-[#e32727] transition-colors duration-500">
                 {{ service.title }}
               </h3>

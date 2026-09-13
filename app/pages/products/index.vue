@@ -219,12 +219,14 @@ const getBrandFromQuery = (query: any) => {
 // Filter State
 const selectedCategories = ref<string[]>(getCategoryFromQuery(route.query))
 const selectedBrands = ref<string[]>(getBrandFromQuery(route.query))
+const searchQuery = ref((route.query.search as string) || (route.query.q as string) || '')
 const currentPage = ref(1)
 
 // Sync from route query if navigated from another component while already on page
 watch(() => route.query, (newQuery) => {
   selectedCategories.value = getCategoryFromQuery(newQuery)
   selectedBrands.value = getBrandFromQuery(newQuery)
+  searchQuery.value = (newQuery.search as string) || (newQuery.q as string) || ''
   currentPage.value = 1
 }, { deep: true })
 
@@ -235,11 +237,13 @@ const brands = computed(() => filterOptions.value?.brands || [])
 
 // Query Params Computed
 const queryParams = computed(() => {
-  return {
-    categories: selectedCategories.value.join(','),
-    brands: selectedBrands.value.join(','),
+  const params: any = {
     page: currentPage.value
   }
+  if (selectedCategories.value.length) params.categories = selectedCategories.value.join(',')
+  if (selectedBrands.value.length) params.brands = selectedBrands.value.join(',')
+  if (searchQuery.value) params.search = searchQuery.value
+  return params
 })
 
 // Fetch Products dynamically with filters
@@ -249,13 +253,14 @@ const filteredProducts = computed(() => productsData.value?.data || [])
 const pagination = computed(() => productsData.value?.meta || { current_page: 1, last_page: 1 })
 
 // Reset page to 1 when filters change
-watch([selectedCategories, selectedBrands], () => {
+watch([selectedCategories, selectedBrands, searchQuery], () => {
   currentPage.value = 1
 })
 
 const clearFilters = () => {
   selectedCategories.value = []
   selectedBrands.value = []
+  searchQuery.value = ''
   currentPage.value = 1
 }
 

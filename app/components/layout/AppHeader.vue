@@ -11,23 +11,22 @@
         </NuxtLink>
 
         <!-- Search Bar (Middle) -->
-        <div class="hidden lg:flex flex-1 max-w-2xl relative mx-8">
-          <div class="w-full relative bg-white border-2 border-[#e32727] rounded-full overflow-hidden shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md group">
+        <div class="hidden lg:flex flex-1 min-w-[280px] max-w-2xl relative mx-3 xl:mx-8">
+          <form @submit.prevent="submitSearch" class="w-full flex items-center bg-white border border-slate-300 hover:border-slate-400 focus-within:!border-[#e32727] rounded-full shadow-xs transition-all focus-within:shadow-sm">
             <input 
               type="text" 
               v-model="searchQuery"
               @input="handleSearch"
               @blur="closeSearchDropdown"
               @focus="searchQuery.trim() ? showSearchDropdown = true : null"
-              placeholder="Search products, brands, and categories..." 
-              class="w-full bg-transparent text-[14px] py-2.5 pl-6 pr-28 focus:outline-none text-slate-700 placeholder:text-slate-400" 
+              placeholder="Search products" 
+              class="flex-1 min-w-0 bg-transparent text-[14px] py-2.5 pl-6 pr-2 focus:outline-none text-slate-700 placeholder:text-slate-400" 
             />
-            <button aria-label="Search" class="absolute right-0 top-0 h-full flex items-center justify-center px-8 bg-[#e32727] text-white hover:bg-red-700 transition-colors font-bold text-[14px]">
-              <Icon v-if="isSearching" name="lucide:loader-2" class="w-4 h-4 mr-1.5 animate-spin" />
-              <Icon v-else name="lucide:search" class="w-4 h-4 mr-1.5" />
-              Search
+            <button type="submit" aria-label="Search" class="shrink-0 p-2 mr-3 text-[#e32727] hover:scale-110 transition-transform focus:outline-none flex items-center justify-center">
+              <Icon v-if="isSearching" name="lucide:loader-2" class="w-5 h-5 animate-spin" />
+              <Icon v-else name="lucide:search" class="w-5 h-5 stroke-[2]" />
             </button>
-          </div>
+          </form>
 
           <!-- Search Dropdown -->
           <div 
@@ -61,20 +60,20 @@
         </div>
 
         <!-- Contact Info & Social Icons (Right) -->
-        <div class="hidden lg:flex items-center gap-6">
+        <div class="hidden lg:flex items-center gap-4 xl:gap-6 shrink-0">
           <!-- Call Us -->
-          <div class="flex items-center gap-3 border-r border-slate-200 pr-6">
-            <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#e32727]">
+          <div class="flex items-center gap-3 xl:border-r xl:border-slate-200 xl:pr-6">
+            <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#e32727] shrink-0">
               <Icon name="lucide:phone-call" class="w-5 h-5" />
             </div>
             <div class="flex flex-col">
-              <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Call Us Now</span>
-              <a :href="`tel:${settings.hotline || settings.phone || '+8801711548676'}`" class="text-slate-800 hover:text-[#e32727] font-black text-[15px] tracking-wide transition-colors">{{ settings.hotline || settings.phone || '+88 01711 548676' }}</a>
+              <span class="text-[10px] xl:text-[11px] text-slate-500 font-bold uppercase tracking-wider">Call Us Now</span>
+              <a :href="`tel:${settings.hotline || settings.phone || '+8801711548676'}`" class="text-slate-800 hover:text-[#e32727] font-black text-[13px] xl:text-[15px] tracking-wide transition-colors whitespace-nowrap">{{ settings.hotline || settings.phone || '+88 01711 548676' }}</a>
             </div>
           </div>
 
           <!-- Social Icons -->
-          <div class="flex items-center gap-2">
+          <div class="hidden xl:flex items-center gap-2">
             <a v-if="settings.facebook" :href="settings.facebook" target="_blank" aria-label="Facebook" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-[#1877F2] hover:text-white transition-all bg-slate-50 border border-slate-100 hover:border-transparent">
               <Icon name="lucide:facebook" class="w-4 h-4" />
             </a>
@@ -260,13 +259,20 @@
           </div>
           
           <div class="pt-4 mt-2 border-t border-slate-100">
-             <div class="flex gap-2">
+             <form @submit.prevent="submitMobileSearch" class="flex gap-2">
                <!-- Mobile Search Bar -->
                <div class="relative flex-1">
-                 <Icon name="lucide:search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                 <input type="text" placeholder="I am looking for..." class="w-full bg-slate-50 border border-slate-200 text-[13px] rounded-lg py-3 pl-9 pr-4 focus:outline-none focus:border-[#e32727] transition-colors font-medium" />
+                 <input 
+                   v-model="mobileSearchQuery" 
+                   type="text" 
+                   placeholder="Search products" 
+                   class="w-full bg-white border border-slate-300 text-[14px] rounded-full py-2.5 pl-5 pr-11 focus:outline-none focus:border-[#e32727] transition-colors font-medium text-slate-700 placeholder:text-slate-400 shadow-xs" 
+                 />
+                 <button type="submit" aria-label="Search" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#e32727] hover:scale-110 transition-transform">
+                   <Icon name="lucide:search" class="w-5 h-5 stroke-[2]" />
+                 </button>
                </div>
-             </div>
+             </form>
           </div>
         </nav>
       </div>
@@ -290,11 +296,24 @@ const settings = computed(() => settingsResponse.value?.data || {})
 
 // Search State
 const searchQuery = ref('')
+const mobileSearchQuery = ref('')
 const searchResults = ref<any[]>([])
 const isSearching = ref(false)
 const showSearchDropdown = ref(false)
 
 let searchTimeout: ReturnType<typeof setTimeout> | null = null
+
+const submitSearch = () => {
+  if (!searchQuery.value.trim()) return
+  showSearchDropdown.value = false
+  router.push(`/products?search=${encodeURIComponent(searchQuery.value.trim())}`)
+}
+
+const submitMobileSearch = () => {
+  if (!mobileSearchQuery.value.trim()) return
+  mobileMenuOpen.value = false
+  router.push(`/products?search=${encodeURIComponent(mobileSearchQuery.value.trim())}`)
+}
 
 const handleSearch = () => {
   if (searchTimeout) clearTimeout(searchTimeout)
@@ -413,7 +432,7 @@ const navLinks = computed(() => [
     hasDropdown: true,
     subMenu: [
       { name: 'Software', path: '/software' },
-      { name: 'News', path: '/blogs' },
+      { name: 'News', path: '/news' },
       { name: 'Knowledge Base', path: '/knowledge-base' }
     ]
   },

@@ -13,7 +13,7 @@
           </h2>
         </div>
         
-        <NuxtLink to="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-900 font-bold rounded-xl shadow-sm hover:shadow-md hover:border-[#e32727] hover:text-[#e32727] transition-all duration-300 uppercase tracking-widest text-xs">
+        <NuxtLink to="/news" class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-900 font-bold rounded-xl shadow-sm hover:shadow-md hover:border-[#e32727] hover:text-[#e32727] transition-all duration-300 uppercase tracking-widest text-xs">
           View All Posts <Icon name="lucide:arrow-right" class="w-4 h-4" />
         </NuxtLink>
       </div>
@@ -46,9 +46,6 @@
             <div class="flex items-center gap-4 mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
               <span class="flex items-center gap-1 text-[#e32727]">
                 <Icon name="lucide:tag" class="w-3 h-3" /> {{ post.category }}
-              </span>
-              <span class="flex items-center gap-1">
-                <Icon name="lucide:user" class="w-3 h-3" /> By Admin
               </span>
             </div>
             
@@ -95,7 +92,7 @@ const blogPosts = computed(() => {
       day,
       month,
       image: b.image,
-      link: `/blogs/${b.slug}`
+      link: `/news/${b.slug}`
     }
   })
 })

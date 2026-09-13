@@ -96,11 +96,6 @@
                 { 'animate-fade-up delay-300': observed.has($el) }
               ]"
             >
-              <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-100 text-[#e32727] text-xs font-black mb-6 tracking-[0.2em] uppercase">
-                <Icon :name="solution.icon || 'lucide:cpu'" class="w-4 h-4" />
-                Solution 0{{ index + 1 }}
-              </div>
-              
               <h3 class="text-3xl md:text-5xl font-black text-slate-800 mb-6 leading-tight group-hover/solution:text-[#e32727] transition-colors duration-300">
                 {{ solution.title }}
               </h3>
