@@ -100,13 +100,18 @@
       <div class="mt-12 md:mt-16 pt-8 border-t border-slate-200 print:hidden">
         <div class="flex flex-wrap gap-2 md:gap-4 border-b border-slate-200 pb-4">
           <button 
-            v-for="tab in ['Description', 'Specifications', 'Accessories', 'Downloads']"
-            :key="tab"
-            @click="activeTab = tab.toLowerCase()"
+            v-for="tab in [
+              { id: 'description', label: 'Description' },
+              { id: 'specifications', label: 'Specifications' },
+              { id: 'related-products', label: 'Related Products' },
+              { id: 'downloads', label: 'Downloads' }
+            ]"
+            :key="tab.id"
+            @click="activeTab = tab.id"
             class="px-6 py-2.5 rounded-lg text-sm md:text-[15px] font-semibold transition-colors"
-            :class="activeTab === tab.toLowerCase() ? 'bg-slate-300 text-slate-900 shadow-sm' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'"
+            :class="(activeTab === tab.id || (tab.id === 'related-products' && activeTab === 'accessories')) ? 'bg-slate-300 text-slate-900 shadow-sm' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'"
           >
-            {{ tab }}
+            {{ tab.label }}
           </button>
         </div>
         
@@ -120,9 +125,9 @@
             <div v-if="product.specs" class="prose prose-sm md:prose-base max-w-none text-slate-600" v-html="product.specs"></div>
             <div v-else class="text-sm text-slate-500 italic">No specifications available.</div>
           </div>
-          <div v-if="activeTab === 'accessories'" class="animate-fade-in">
+          <div v-if="activeTab === 'related-products' || activeTab === 'accessories'" class="animate-fade-in">
 
-            <!-- Minimal Categorized Accessories Side-by-Side Layout -->
+            <!-- Minimal Categorized Related Products Side-by-Side Layout -->
             <div v-if="categorizedAccessories.length > 0" class="flex flex-col md:flex-row gap-6 items-start">
               
               <!-- Minimal Left Sidebar: Category List -->
@@ -183,14 +188,14 @@
                 </div>
 
                 <div v-else class="text-slate-400 italic text-xs py-8 text-center bg-white border border-slate-200 rounded-xl">
-                  No items assigned to this accessory category.
+                  No items assigned to this category.
                 </div>
               </div>
 
             </div>
 
             <div v-else class="text-slate-400 italic text-xs py-8 text-center bg-white border border-slate-200 rounded-xl">
-              No accessories found.
+              No related products found.
             </div>
           </div>
           <div v-if="activeTab === 'downloads'" class="animate-fade-in">
@@ -327,7 +332,8 @@ const allImages = computed(() => {
 })
 
 const activeImage = ref('')
-const activeTab = ref((route.query.tab as string) || 'description')
+const queryTab = (route.query.tab as string)?.toLowerCase()
+const activeTab = ref(queryTab === 'accessories' ? 'related-products' : (queryTab || 'description'))
 const isPriceModalOpen = ref(false)
 
 // Initialize active image when product is found
